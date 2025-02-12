@@ -1,9 +1,12 @@
+# Combining all the discussed elements: 2025 Calendar, Notebook sections, and Music Hub with sparkles into one cohesive HTML code
+
+combined_html_code = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Celestial Hub - Music Hub</title>
+  <title>Celestial Hub - Unified Project</title>
   <style>
     body {
       background: linear-gradient(135deg, #f3e5ab, #d7ccc8, #f8bbd0);
@@ -28,6 +31,41 @@
       overflow-y: scroll;
       z-index: 1;
     }
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      background: #e1bee7;
+      border-bottom: 2px solid #bdbdbd;
+      padding: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .tab {
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-weight: bold;
+    }
+    .tab:hover {
+      background: #ce93d8;
+    }
+    .content {
+      padding: 20px;
+      height: calc(100% - 60px);
+      overflow-y: auto;
+      font-size: 1.1rem;
+      display: none;
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
     h1 {
       text-align: center;
       font-size: 1.5rem;
@@ -40,13 +78,23 @@
       color: #666;
       margin-bottom: 10px;
     }
-    iframe {
-      width: 100%;
-      height: 300px;
-      border: none;
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 5px;
+      padding: 20px;
+    }
+    .day {
+      padding: 15px;
+      background: #e1bee7;
       border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .day:hover {
+      background: #ce93d8;
     }
     .sparkles {
       position: fixed;
@@ -66,44 +114,97 @@
       animation: sparkle 3s infinite ease-in-out;
     }
     @keyframes sparkle {
-      0% {
-        transform: translateY(-10px) scale(0.5);
-        opacity: 0;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) scale(1);
-        opacity: 0;
-      }
+      0% { transform: translateY(-10px) scale(0.5); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(100vh) scale(1); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
   <div class="notebook">
-    <h1>🎵 Music Hub 🎵</h1>
-    
-    <h2>Rap Girlies</h2>
-    <p>Boss up with empowering anthems. Perfect for feeling confident and unstoppable.</p>
-    <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" 
-    src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
+    <div class="tabs">
+      <div class="tab" onclick="showContent('calendar')">📅 Calendar</div>
+      <div class="tab" onclick="showContent('notebook')">📓 Notebook</div>
+      <div class="tab" onclick="showContent('music')">🎵 Music</div>
+    </div>
 
-    <h2>High Vibrations Music</h2>
-    <p>Raise your frequency with soothing, uplifting tunes that bring balance and harmony.</p>
-    <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" 
-    src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"></iframe>
+    <!-- Calendar Section -->
+    <div class="content" id="calendar">
+      <h1>2025 Calendar</h1>
+      <label for="month-select">Select Month:</label>
+      <select id="month-select" onchange="updateCalendar()">
+        <option value="January">January</option>
+        <option value="February" selected>February</option>
+        <option value="March">March</option>
+        <option value="April">April</option>
+        <option value="May">May</option>
+        <option value="June">June</option>
+        <option value="July">July</option>
+        <option value="August">August</option>
+        <option value="September">September</option>
+        <option value="October">October</option>
+        <option value="November">November</option>
+        <option value="December">December</option>
+      </select>
+      <div class="calendar" id="calendar-days"></div>
+    </div>
 
-    <h2>Afrowave</h2>
-    <p>Catch the vibe with afro-fusion beats and high-energy rhythms that keep you moving.</p>
-    <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" 
-    src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
+    <!-- Notebook Section -->
+    <div class="content" id="notebook">
+      <h1>Notebook</h1>
+      <h2>Gratitude</h2>
+      <p>🌼 Daily Gratitude Check: Reflect on what you’re thankful for.</p>
+      <h2>Journal Prompts</h2>
+      <p>📓 Reflective Prompts: Explore your feelings and thoughts.</p>
+      <h2>Balance</h2>
+      <p>⚖️ Wellness Check: Assess your mental, physical, and emotional balance.</p>
+    </div>
+
+    <!-- Music Section -->
+    <div class="content" id="music">
+      <h1>🎵 Music Hub 🎵</h1>
+      <h2>Rap Girlies</h2>
+      <p>Boss up with empowering anthems. Perfect for feeling confident and unstoppable.</p>
+      <iframe src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
+      <h2>High Vibrations Music</h2>
+      <p>Raise your frequency with soothing, uplifting tunes.</p>
+      <iframe src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"></iframe>
+      <h2>Afrowave</h2>
+      <p>Catch the vibe with afro-fusion beats and high-energy rhythms.</p>
+      <iframe src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
+    </div>
   </div>
 
   <div class="sparkles"></div>
 
   <script>
+    function showContent(section) {
+      const sections = document.querySelectorAll('.content');
+      sections.forEach(sec => sec.style.display = 'none');
+      document.getElementById(section).style.display = 'block';
+    }
+    
+    function updateCalendar() {
+      const month = document.getElementById('month-select').value;
+      generateCalendar(month);
+    }
+
+    function generateCalendar(month) {
+      const calendarDays = document.getElementById('calendar-days');
+      calendarDays.innerHTML = ''; // Clear existing days
+      const daysInMonth = {
+        January: 31, February: 28, March: 31, April: 30, May: 31, June: 30,
+        July: 31, August: 31, September: 30, October: 31, November: 30, December: 31
+      };
+      for (let i = 1; i <= daysInMonth[month]; i++) {
+        const day = document.createElement('div');
+        day.className = 'day';
+        day.textContent = i;
+        calendarDays.appendChild(day);
+      }
+    }
+
     function createSparkle() {
       const sparkle = document.createElement('div');
       sparkle.className = 'sparkle';
@@ -112,9 +213,15 @@
       document.querySelector('.sparkles').appendChild(sparkle);
       setTimeout(() => sparkle.remove(), 5000);
     }
-
     setInterval(createSparkle, 150);
+
+    document.addEventListener('DOMContentLoaded', function() {
+      generateCalendar('February');
+    });
   </script>
 
 </body>
 </html>
+"""
+
+combined_html_code
