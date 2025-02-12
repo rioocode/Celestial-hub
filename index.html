@@ -3,34 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Celestial Hub - Your Digital Space</title>
+  <title>Celestial Hub</title>
   <style>
-    :root {
-      --primary-color: #e1bee7;
-      --secondary-color: #ce93d8;
-      --text-color: #333;
-      --border-color: #bdbdbd;
-      --shadow-color: rgba(0, 0, 0, 0.15);
-      --gradient-start: #dfe9f3;
-      --gradient-end: #f7f7f7;
-    }
-
+    /* CSS Reset */
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #b39ddb;
+      --secondary-color: #d1c4e9;
+      --background-start: #e3f2fd;
+      --background-end: #f1f8e9;
+      --text-color: #333;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --border-radius: 10px;
+      --spacing: 20px;
     }
 
     body {
-      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-      font-family: 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, var(--background-start), var(--background-end));
+      font-family: system-ui, -apple-system, sans-serif;
       color: var(--text-color);
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      overflow-x: hidden;
+      display: grid;
+      place-items: center;
     }
 
     .background-clouds {
@@ -39,11 +38,10 @@
       left: 0;
       width: 300%;
       height: 100%;
-      background: url('/api/placeholder/1920/1080') repeat-x center;
-      animation: moveClouds 100s linear infinite;
-      z-index: -2;
-      opacity: 0.85;
-      filter: blur(1px);
+      background: url('data:image/svg+xml,<svg>...</svg>') repeat-x center;
+      animation: moveClouds 120s linear infinite;
+      z-index: -1;
+      opacity: 0.8;
     }
 
     @keyframes moveClouds {
@@ -51,388 +49,196 @@
       to { transform: translateX(-50%); }
     }
 
-    .petal {
-      position: fixed;
-      width: 30px;
-      height: 30px;
-      background: url('/api/placeholder/30/30') no-repeat center;
-      background-size: cover;
-      animation: floatPetal 14s ease-in-out infinite;
-      opacity: 0.7;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    @keyframes floatPetal {
-      0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-      }
-      50% {
-        transform: translate(-20px, 120px) rotate(180deg);
-      }
-    }
-
-    .notebook {
-      width: 95%;
-      max-width: 1200px;
-      height: 90vh;
+    .container {
+      width: min(95%, 1200px);
       background: #fff;
-      border: 10px solid var(--border-color);
-      border-radius: 20px;
-      box-shadow: 0 4px 20px var(--shadow-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      padding: var(--spacing);
       z-index: 1;
+      margin: var(--spacing) 0;
     }
 
     .tabs {
-      display: flex;
-      justify-content: space-around;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
       background: var(--primary-color);
       padding: 15px;
-      gap: 10px;
+      border-radius: var(--border-radius);
     }
 
     .tab {
-      padding: 12px 24px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: var(--border-radius);
       cursor: pointer;
       transition: all 0.3s ease;
       font-weight: 600;
       font-size: 1.1rem;
-      flex: 1;
       text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      border: none;
     }
 
-    .tab:hover {
+    .tab:hover,
+    .tab[aria-selected="true"] {
       background: var(--secondary-color);
       transform: translateY(-2px);
-      color: white;
     }
 
-    .tab.active {
-      background: white;
-      box-shadow: 0 2px 4px var(--shadow-color);
-    }
-
-    .content-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
+    .tab[aria-selected="true"] {
+      box-shadow: var(--shadow);
     }
 
     .content {
+      padding: var(--spacing);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    [role="tabpanel"][hidden] {
       display: none;
-      padding: 20px;
-      animation: fadeIn 0.3s ease-in-out;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .content.active {
-      display: block;
-    }
-
-    /* Calendar Styles */
-    .calendar-controls {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-      align-items: center;
-    }
-
-    .calendar-grid {
+    .calendar {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-      margin-top: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing);
+      margin-top: var(--spacing);
     }
 
-    .calendar-day {
+    .calendar-month {
       padding: 15px;
+      background: #f3e5f5;
+      border-radius: var(--border-radius);
       text-align: center;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.2s ease;
-      border: 1px solid var(--border-color);
+      transition: transform 0.3s ease, background 0.3s ease;
     }
 
-    .calendar-day:hover {
-      background: var(--primary-color);
+    .calendar-month:hover {
+      background: #ce93d8;
       transform: scale(1.05);
     }
 
-    /* Music Player Styles */
-    .music-section {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .playlist-selector {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .playlist-select {
-      padding: 12px 24px;
-      font-size: 1.1rem;
-      border-radius: 10px;
-      border: 2px solid var(--primary-color);
-      background: white;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      width: 300px;
-      text-align: center;
-    }
-
-    .playlist-select:hover {
-      border-color: var(--secondary-color);
-      transform: translateY(-2px);
-    }
-
-    .music-player-container {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Journal Styles */
-    .journal-entry {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px var(--shadow-color);
-    }
-
-    .journal-input {
-      width: 100%;
-      min-height: 200px;
+    .journal-prompt {
+      margin-bottom: var(--spacing);
       padding: 15px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      font-size: 1rem;
-      resize: vertical;
-      margin: 10px 0;
-      font-family: inherit;
+      background: #e8f5e9;
+      border-radius: var(--border-radius);
+      transition: transform 0.3s ease;
     }
 
-    .save-button {
-      padding: 10px 20px;
-      background: var(--primary-color);
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.2s ease;
-      color: var(--text-color);
+    .journal-prompt:hover {
+      transform: translateX(10px);
     }
 
-    .save-button:hover {
-      background: var(--secondary-color);
-      transform: translateY(-2px);
-      color: white;
-    }
-
-    /* Motivation Styles */
-    .quote-container {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-      margin: 20px 0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .quote {
-      font-size: 1.4rem;
-      line-height: 1.6;
-      margin-bottom: 20px;
-      font-style: italic;
-    }
-
-    /* Responsive Design */
     @media (max-width: 768px) {
-      .notebook {
-        height: 95vh;
-        width: 98%;
+      :root {
+        --spacing: 15px;
       }
 
-      .tab {
-        font-size: 0.9rem;
-        padding: 10px;
-      }
-
-      .content {
-        padding: 10px;
-      }
-
-      .music-player-container iframe {
-        height: 380px;
+      .tabs {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div class="background-clouds"></div>
-  
-  <!-- Petals -->
-  <div class="petal" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
-  <div class="petal" style="top: 35%; left: 55%; animation-delay: 4s;"></div>
-  <div class="petal" style="top: 60%; left: 15%; animation-delay: 7s;"></div>
-  <div class="petal" style="top: 75%; left: 70%; animation-delay: 10s;"></div>
-  <div class="petal" style="top: 50%; left: 90%; animation-delay: 13s;"></div>
+  <div class="background-clouds" aria-hidden="true"></div>
 
-  <div class="notebook">
-    <div class="tabs">
-      <div class="tab active" onclick="showContent('calendar')">📅 Calendar</div>
-      <div class="tab" onclick="showContent('journal')">📓 Journal</div>
-      <div class="tab" onclick="showContent('motivation')">💪 Motivation</div>
-      <div class="tab" onclick="showContent('music')">🎵 Music</div>
+  <main class="container">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" aria-controls="calendar">
+        📅 Calendar
+      </button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="schedule">
+        📓 Schedule
+      </button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="journal">
+        🖋️ Journal
+      </button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="music">
+        🎵 Music
+      </button>
     </div>
 
-    <div class="content-container">
-      <!-- Calendar Section -->
-      <div class="content active" id="calendar">
-        <div class="calendar-controls">
-          <label for="month-select">Select Month:</label>
-          <select id="month-select" onchange="updateCalendar()">
-            <option value="0">January</option>
-            <option value="1" selected>February</option>
-            <option value="2">March</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">July</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
-          </select>
-          <span id="current-year">2025</span>
-        </div>
-        <div class="calendar-grid" id="calendar-grid"></div>
-      </div>
-
-      <!-- Journal Section -->
-      <div class="content" id="journal">
-        <h2>My Journal</h2>
-        <div class="journal-entry">
-          <label for="entry-date">Date:</label>
-          <input type="date" id="entry-date" value="2025-02-12">
-          <textarea id="journal-text" class="journal-input" placeholder="Write your thoughts here..."></textarea>
-          <button class="save-button" onclick="saveJournalEntry()">Save Entry</button>
-        </div>
-        <div id="past-entries"></div>
-      </div>
-
-      <!-- Motivation Section -->
-      <div class="content" id="motivation">
-        <h2>Daily Motivation</h2>
-        <div class="quote-container">
-          <div id="quote-of-day" class="quote"></div>
-          <button class="save-button" onclick="generateQuote()">New Quote</button>
-        </div>
-      </div>
-
-      <!-- Music Section -->
-      <div class="content" id="music">
-        <h2>Music Player</h2>
-        <div class="music-section">
-          <div class="playlist-selector">
-            <select id="playlist-choice" onchange="changePlaylist()" class="playlist-select">
-              <option value="pl.u-WabZ1b7HW61v13">High Vibrations Music</option>
-              <option value="pl.u-NpXmbe7IvRGpGM">Rap Girlies</option>
-              <option value="pl.u-oZyl5yWIPYr0rE">Afrowave</option>
-            </select>
-          </div>
-          <div class="music-player-container">
-            <iframe 
-              id="apple-music-player"
-              allow="autoplay *; encrypted-media *;" 
-              frameborder="0" 
-              height="450" 
-              style="width:100%;max-width:660px;overflow:hidden;background:transparent;" 
-              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" 
-              src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13">
-            </iframe>
-          </div>
-        </div>
+    <div class="content" role="tabpanel" id="calendar">
+      <h1>2025 Calendar</h1>
+      <div class="calendar">
+        <!-- Dynamic calendar generation would go here -->
       </div>
     </div>
-  </div>
+
+    <div class="content" role="tabpanel" id="schedule" hidden>
+      <h1>Weekly Schedule</h1>
+      <ul>
+        <li><strong>Monday:</strong> Gym at 4:45 AM, work, study, and writing assignments</li>
+        <li><strong>Tuesday:</strong> Work, book writing, and Celestial Hub coding</li>
+        <li><strong>Wednesday:</strong> Gym at 4:45 AM, Wine Down Wednesday (relax, wine, TV)</li>
+        <li><strong>Thursday:</strong> Productivity day—focus on wrapping up work and school tasks</li>
+        <li><strong>Friday:</strong> Gym at 4:45 AM, decompress, and optional content creation</li>
+        <li><strong>Saturday:</strong> Sleep in, clean, gym, schoolwork from 5–8 PM</li>
+        <li><strong>Sunday:</strong> Yoga at the gym, meal prep, and content creation</li>
+      </ul>
+    </div>
+
+    <!-- Additional content sections... -->
+  </main>
 
   <script>
-    // Show content function
-    function showContent(contentId) {
-      document.querySelectorAll('.content').forEach(content => {
-        content.classList.remove('active');
-      });
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-      });
-      
-      document.getElementById(contentId).classList.add('active');
-      const activeTab = Array.from(document.querySelectorAll('.tab')).find(tab => 
-        tab.textContent.toLowerCase().includes(contentId.toLowerCase())
-      );
-      activeTab.classList.add('active');
-    }
-
-    // Calendar functions
-    function updateCalendar() {
-      const month = parseInt(document.getElementById('month-select').value);
-      const year = 2025;
-      const firstDay = new Date(year, month, 1);
-      const lastDay = new Date(year, month + 1, 0);
-      
-      const calendarGrid = document.getElementById('calendar-grid');
-      calendarGrid.innerHTML = '';
-      
-      // Add day headers
-      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      days.forEach(day => {
-        const dayHeader = document.createElement('div');
-        dayHeader.className = 'calendar-day';
-        dayHeader.textContent = day;
-        dayHeader.style.fontWeight = 'bold';
-        calendarGrid.appendChild(dayHeader);
-      });
-      
-      // Add empty cells for days before first day of month
-      for (let i = 0; i < firstDay.getDay(); i++) {
-        const emptyCell = document.createElement('div');
-        emptyCell.className = 'calendar-day';
-        calendarGrid.appendChild(emptyCell);
+    class TabInterface {
+      constructor(container) {
+        this.tablist = container.querySelector('[role="tablist"]');
+        this.tabs = container.querySelectorAll('[role="tab"]');
+        this.panels = container.querySelectorAll('[role="tabpanel"]');
+        
+        this.init();
       }
-      
-      // Add days of month
-      for (let day = 1; day <= lastDay.getDate(); day++) {
-        const dayCell = document.createElement('div');
-        dayCell.className = 'calendar-day';
-        dayCell.textContent = day;
-        dayCell.onclick = () => addEvent(year, month, day);
-        calendarGrid.appendChild(dayCell);
+
+      init() {
+        // Add keyboard events
+        this.tablist.addEventListener('keydown', e => this.handleKeyPress(e));
+        
+        // Add click events
+        this.tabs.forEach(tab => {
+          tab.addEventListener('click', e => this.switchTab(e.currentTarget));
+        });
+      }
+
+      switchTab(tab) {
+        const targetId = tab.getAttribute('aria-controls');
+        
+        // Update selected state
+        this.tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+        tab.setAttribute('aria-selected', 'true');
+        
+        // Show selected panel
+        this.panels.forEach(panel => {
+          panel.hidden = panel.id !== targetId;
+        });
+      }
+
+      handleKeyPress(e) {
+        const targetTab = e.target.closest('[role="tab"]');
+        if (!targetTab) return;
+
+        const currentIdx = Array.from(this.tabs).indexOf(targetTab);
+        
+        switch(e.key) {
+          case 'ArrowLeft':
+            this.switchTab(this.tabs[currentIdx > 0 ? currentIdx - 1 : this.tabs.length - 1]);
+            break;
+          case 'ArrowRight':
+            this.switchTab(this.tabs[currentIdx < this.tabs.length - 1 ? currentIdx + 1 : 0]);
+            break;
+        }
       }
     }
 
-    // Journal functions
-    function saveJournalEntry() {
-      const date = document.getElementById('entry-date').value;
-      const text = document.getElementById('journal-text').value;
-      
-      if (text.trim() ===
+    // Initialize tabs
+    new TabInterface(document.querySelector('.container'));
+  </script>
+</body>
+</html>
