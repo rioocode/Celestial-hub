@@ -1,244 +1,145 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Celestial Hub</title>
-  <style>
-    /* CSS Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary-color: #b39ddb;
-      --secondary-color: #d1c4e9;
-      --background-start: #e3f2fd;
-      --background-end: #f1f8e9;
-      --text-color: #333;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      --border-radius: 10px;
-      --spacing: 20px;
-    }
-
-    body {
-      background: linear-gradient(135deg, var(--background-start), var(--background-end));
-      font-family: system-ui, -apple-system, sans-serif;
-      color: var(--text-color);
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-    }
-
-    .background-clouds {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 300%;
-      height: 100%;
-      background: url('data:image/svg+xml,<svg>...</svg>') repeat-x center;
-      animation: moveClouds 120s linear infinite;
-      z-index: -1;
-      opacity: 0.8;
-    }
-
-    @keyframes moveClouds {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    .container {
-      width: min(95%, 1200px);
-      background: #fff;
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      padding: var(--spacing);
-      z-index: 1;
-      margin: var(--spacing) 0;
-    }
-
-    .tabs {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      background: var(--primary-color);
-      padding: 15px;
-      border-radius: var(--border-radius);
-    }
-
-    .tab {
-      padding: 15px;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: var(--border-radius);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 600;
-      font-size: 1.1rem;
-      text-align: center;
-      border: none;
-    }
-
-    .tab:hover,
-    .tab[aria-selected="true"] {
-      background: var(--secondary-color);
-      transform: translateY(-2px);
-    }
-
-    .tab[aria-selected="true"] {
-      box-shadow: var(--shadow);
-    }
-
-    .content {
-      padding: var(--spacing);
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    [role="tabpanel"][hidden] {
-      display: none;
-    }
-
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: var(--spacing);
-      margin-top: var(--spacing);
-    }
-
-    .calendar-month {
-      padding: 15px;
-      background: #f3e5f5;
-      border-radius: var(--border-radius);
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-
-    .calendar-month:hover {
-      background: #ce93d8;
-      transform: scale(1.05);
-    }
-
-    .journal-prompt {
-      margin-bottom: var(--spacing);
-      padding: 15px;
-      background: #e8f5e9;
-      border-radius: var(--border-radius);
-      transition: transform 0.3s ease;
-    }
-
-    .journal-prompt:hover {
-      transform: translateX(10px);
-    }
-
-    @media (max-width: 768px) {
-      :root {
-        --spacing: 15px;
-      }
-
-      .tabs {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="background-clouds" aria-hidden="true"></div>
-
-  <main class="container">
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" aria-selected="true" aria-controls="calendar">
-        📅 Calendar
-      </button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="schedule">
-        📓 Schedule
-      </button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="journal">
-        🖋️ Journal
-      </button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="music">
-        🎵 Music
-      </button>
-    </div>
-
-    <div class="content" role="tabpanel" id="calendar">
-      <h1>2025 Calendar</h1>
-      <div class="calendar">
-        <!-- Dynamic calendar generation would go here -->
+<div class="content" id="music">
+  <h1>🎵 Music Hub 🎵</h1>
+  
+  <div class="playlist-container">
+    <div class="playlist-card">
+      <h2>Rap Girlies</h2>
+      <div class="playlist-wrapper">
+        <iframe 
+          title="Rap Girlies Playlist"
+          src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"
+          allow="autoplay *; encrypted-media *;"
+          frameborder="0"
+          loading="lazy"
+          class="playlist-iframe"
+        ></iframe>
+        <div class="playlist-fallback">
+          <p>Unable to load playlist? <a href="https://music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM" target="_blank" rel="noopener noreferrer">Open in Apple Music</a></p>
+        </div>
       </div>
     </div>
 
-    <div class="content" role="tabpanel" id="schedule" hidden>
-      <h1>Weekly Schedule</h1>
-      <ul>
-        <li><strong>Monday:</strong> Gym at 4:45 AM, work, study, and writing assignments</li>
-        <li><strong>Tuesday:</strong> Work, book writing, and Celestial Hub coding</li>
-        <li><strong>Wednesday:</strong> Gym at 4:45 AM, Wine Down Wednesday (relax, wine, TV)</li>
-        <li><strong>Thursday:</strong> Productivity day—focus on wrapping up work and school tasks</li>
-        <li><strong>Friday:</strong> Gym at 4:45 AM, decompress, and optional content creation</li>
-        <li><strong>Saturday:</strong> Sleep in, clean, gym, schoolwork from 5–8 PM</li>
-        <li><strong>Sunday:</strong> Yoga at the gym, meal prep, and content creation</li>
-      </ul>
+    <div class="playlist-card">
+      <h2>High Vibrations Music</h2>
+      <div class="playlist-wrapper">
+        <iframe 
+          title="High Vibrations Music Playlist"
+          src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"
+          allow="autoplay *; encrypted-media *;"
+          frameborder="0"
+          loading="lazy"
+          class="playlist-iframe"
+        ></iframe>
+        <div class="playlist-fallback">
+          <p>Unable to load playlist? <a href="https://music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13" target="_blank" rel="noopener noreferrer">Open in Apple Music</a></p>
+        </div>
+      </div>
     </div>
 
-    <!-- Additional content sections... -->
-  </main>
+    <div class="playlist-card">
+      <h2>Afrowave</h2>
+      <div class="playlist-wrapper">
+        <iframe 
+          title="Afrowave Playlist"
+          src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"
+          allow="autoplay *; encrypted-media *;"
+          frameborder="0"
+          loading="lazy"
+          class="playlist-iframe"
+        ></iframe>
+        <div class="playlist-fallback">
+          <p>Unable to load playlist? <a href="https://music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE" target="_blank" rel="noopener noreferrer">Open in Apple Music</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <script>
-    class TabInterface {
-      constructor(container) {
-        this.tablist = container.querySelector('[role="tablist"]');
-        this.tabs = container.querySelectorAll('[role="tab"]');
-        this.panels = container.querySelectorAll('[role="tabpanel"]');
-        
-        this.init();
-      }
-
-      init() {
-        // Add keyboard events
-        this.tablist.addEventListener('keydown', e => this.handleKeyPress(e));
-        
-        // Add click events
-        this.tabs.forEach(tab => {
-          tab.addEventListener('click', e => this.switchTab(e.currentTarget));
-        });
-      }
-
-      switchTab(tab) {
-        const targetId = tab.getAttribute('aria-controls');
-        
-        // Update selected state
-        this.tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-        tab.setAttribute('aria-selected', 'true');
-        
-        // Show selected panel
-        this.panels.forEach(panel => {
-          panel.hidden = panel.id !== targetId;
-        });
-      }
-
-      handleKeyPress(e) {
-        const targetTab = e.target.closest('[role="tab"]');
-        if (!targetTab) return;
-
-        const currentIdx = Array.from(this.tabs).indexOf(targetTab);
-        
-        switch(e.key) {
-          case 'ArrowLeft':
-            this.switchTab(this.tabs[currentIdx > 0 ? currentIdx - 1 : this.tabs.length - 1]);
-            break;
-          case 'ArrowRight':
-            this.switchTab(this.tabs[currentIdx < this.tabs.length - 1 ? currentIdx + 1 : 0]);
-            break;
-        }
-      }
+  <style>
+    .playlist-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 1rem;
     }
 
-    // Initialize tabs
-    new TabInterface(document.querySelector('.container'));
+    .playlist-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .playlist-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .playlist-wrapper {
+      position: relative;
+      width: 100%;
+      height: 450px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .playlist-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .playlist-fallback {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .playlist-iframe:not([src]) + .playlist-fallback,
+    .playlist-iframe.error + .playlist-fallback {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .playlist-wrapper {
+        height: 380px;
+      }
+    }
+  </style>
+
+  <script>
+    // Handle iframe loading errors
+    document.querySelectorAll('.playlist-iframe').forEach(iframe => {
+      iframe.addEventListener('error', () => {
+        iframe.classList.add('error');
+      });
+    });
+
+    // Add lazy loading for performance
+    const observerOptions = {
+      root: null,
+      rootMargin: '50px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const iframe = entry.target;
+          if (!iframe.src) {
+            iframe.src = iframe.dataset.src;
+          }
+          observer.unobserve(iframe);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.playlist-iframe').forEach(iframe => {
+      observer.observe(iframe);
+    });
   </script>
-</body>
-</html>
+</div>
