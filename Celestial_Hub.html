@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Celestial Hub</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #4b0082, #5a8d3f, #a67c52);
+      font-family: 'Courier New', monospace;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .phone {
+      width: 320px;
+      height: 640px;
+      background: #333;
+      border: 12px solid #222;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .screen {
+      width: 280px;
+      height: 500px;
+      background: #111;
+      border-radius: 20px;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 15px;
+      color: #8af7b7;
+    }
+    .header {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .icon-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+    .icon {
+      width: 70px;
+      height: 70px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px;
+      font-size: 0.9rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .icon:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .footer {
+      text-align: center;
+      font-size: 1rem;
+    }
+    .button {
+      padding: 10px 20px;
+      background: #6a0dad;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .button:hover {
+      background: #5a009b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="phone">
+    <div class="screen">
+      <div class="header">Celestial Hub</div>
+      <div class="icon-grid">
+        <div class="icon" onclick="alert('Tasks coming soon!')">📅 Tasks</div>
+        <div class="icon" onclick="alert('Notes coming soon!')">📝 Notes</div>
+        <div class="icon" onclick="alert('Music coming soon!')">🎵 Music</div>
+        <div class="icon" onclick="alert('Settings coming soon!')">⚙️ Settings</div>
+      </div>
+      <div class="footer">
+        <button class="button" onclick="alert('Explore more features soon!')">🌟 Explore More 🌟</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
