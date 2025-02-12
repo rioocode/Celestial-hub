@@ -17,23 +17,6 @@
       min-height: 100vh;
     }
 
-    .background-clouds {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 300%;
-      height: 100%;
-      background: url('https://i.imgur.com/8KUhD6O.png') repeat-x center;
-      animation: moveClouds 120s linear infinite;
-      z-index: -1;
-      opacity: 0.8;
-    }
-
-    @keyframes moveClouds {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
     .container {
       width: 95%;
       max-width: 1200px;
@@ -42,7 +25,6 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       padding: 20px;
-      z-index: 1;
     }
 
     .tabs {
@@ -71,16 +53,35 @@
       display: none;
       padding: 20px;
       font-size: 1.2rem;
-      line-height: 1.8;
     }
 
     .content.active {
       display: block;
     }
 
+    .month-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .month {
+      padding: 15px;
+      background: #f3e5f5;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .month:hover {
+      background: #ce93d8;
+    }
+
     .calendar {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(7, 1fr);
       gap: 10px;
       margin-top: 20px;
     }
@@ -105,26 +106,9 @@
       border-radius: 10px;
     }
 
-    .sub-section {
-      margin-top: 20px;
-      padding: 15px;
-      background: #fce4ec;
-      border-radius: 10px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 150px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-    }
   </style>
 </head>
 <body>
-
-  <div class="background-clouds"></div>
 
   <div class="container">
     <div class="tabs">
@@ -133,40 +117,42 @@
       <div class="tab" onclick="showContent('music')">🎵 Music Hub</div>
     </div>
 
-    <!-- Calendar with Full-Year Embedded Tasks -->
+    <!-- Calendar Section -->
     <div class="content" id="calendar">
       <h1>2025 Calendar</h1>
-      <div class="calendar">
-        <div class="calendar-day" onclick="showTasks('Monday')">Monday</div>
-        <div class="calendar-day" onclick="showTasks('Tuesday')">Tuesday</div>
-        <div class="calendar-day" onclick="showTasks('Wednesday')">Wednesday</div>
-        <div class="calendar-day" onclick="showTasks('Thursday')">Thursday</div>
-        <div class="calendar-day" onclick="showTasks('Friday')">Friday</div>
-        <div class="calendar-day" onclick="showTasks('Saturday')">Saturday</div>
-        <div class="calendar-day" onclick="showTasks('Sunday')">Sunday</div>
+      <div class="month-grid">
+        <div class="month" onclick="showMonth('January')">January</div>
+        <div class="month" onclick="showMonth('February')">February</div>
+        <div class="month" onclick="showMonth('March')">March</div>
+        <div class="month" onclick="showMonth('April')">April</div>
+        <div class="month" onclick="showMonth('May')">May</div>
+        <div class="month" onclick="showMonth('June')">June</div>
+        <div class="month" onclick="showMonth('July')">July</div>
+        <div class="month" onclick="showMonth('August')">August</div>
+        <div class="month" onclick="showMonth('September')">September</div>
+        <div class="month" onclick="showMonth('October')">October</div>
+        <div class="month" onclick="showMonth('November')">November</div>
+        <div class="month" onclick="showMonth('December')">December</div>
       </div>
+      <div class="calendar" id="month-view"></div>
       <div class="task-list" id="task-list">
-        <p>Select a day to see your tasks.</p>
+        <p>Select a date to see your tasks.</p>
       </div>
     </div>
 
-    <!-- Notebook with Journal Prompts, Gratitude, and Free Notes -->
+    <!-- Notebook Section -->
     <div class="content" id="journal">
       <h1>Notebook</h1>
-      <div class="sub-section">🌟 <strong>Journal Prompts:</strong> Reflect on your personal growth journey.</div>
-      <div class="sub-section">🌼 <strong>Gratitude Affirmations:</strong> "I am grounded, grateful, and growing." Repeat this aloud.</div>
-      <div class="sub-section">📝 <strong>Free Notes:</strong> Write down your thoughts and ideas here.</div>
+      <div class="task-list">🌟 <strong>Journal Prompts:</strong> Reflect on your personal growth journey.</div>
+      <div class="task-list">🌼 <strong>Gratitude Affirmations:</strong> "I am grounded, grateful, and growing."</div>
+      <div class="task-list">📝 <strong>Free Notes:</strong> Write your thoughts and reflections here.</div>
     </div>
 
-    <!-- Music Hub -->
+    <!-- Music Hub Section -->
     <div class="content" id="music">
       <h1>🎵 Music Hub 🎵</h1>
-      <h2>Rap Girlies</h2>
-      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
-      <h2>High Vibrations Music</h2>
-      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"></iframe>
-      <h2>Afrowave</h2>
-      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
+      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
+      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"></iframe>
     </div>
   </div>
 
@@ -177,14 +163,22 @@
       document.getElementById(section).classList.add('active');
     }
 
-    function showTasks(day) {
+    function showMonth(month) {
+      const monthView = document.getElementById('month-view');
+      let days = '';
+      for (let i = 1; i <= 31; i++) {
+        days += `<div class="calendar-day" onclick="showTasks('${month} ${i}')">${month} ${i}</div>`;
+      }
+      monthView.innerHTML = days;
+    }
+
+    function showTasks(date) {
       const taskList = document.getElementById('task-list');
       const tasks = {
-        'Monday': '<p><strong>Monday Tasks:</strong></p><ul><li>4:45 AM: Gym Session</li><li>8:00 AM - 4:30 PM: Work</li><li>Evening: Study & Writing Assignments</li></ul>',
-        'Tuesday': '<p><strong>Tuesday Tasks:</strong></p><ul><li>Work on Book</li><li>1-hour Celestial Hub Project</li></ul>',
-        'Wednesday': '<p><strong>Wednesday Tasks:</strong></p><ul><li>4:45 AM: Gym</li><li>Wine Down Wednesday</li><li>Relax & Watch TV</li></ul>'
+        'Monday': '<ul><li>4:45 AM: Gym</li><li>8:00 AM - Work</li><li>Evening: Study Block</li></ul>',
+        'Wednesday': '<ul><li>4:45 AM: Gym</li><li>Wine Down Wednesday</li></ul>'
       };
-      taskList.innerHTML = tasks[day] || '<p>No tasks scheduled for this day.</p>';
+      taskList.innerHTML = tasks[date.split(' ')[0]] || `<p>Tasks for ${date}.</p>`;
     }
 
     showContent('calendar');
