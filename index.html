@@ -1,145 +1,188 @@
-<div class="content" id="music">
-  <h1>🎵 Music Hub 🎵</h1>
-  
-  <div class="playlist-container">
-    <div class="playlist-card">
-      <h2>Rap Girlies</h2>
-      <div class="playlist-wrapper">
-        <iframe 
-          title="Rap Girlies Playlist"
-          src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"
-          allow="autoplay *; encrypted-media *;"
-          frameborder="0"
-          loading="lazy"
-          class="playlist-iframe"
-        ></iframe>
-        <div class="playlist-fallback">
-          <p>Unable to load playlist? <a href="https://music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM" target="_blank" rel="noopener noreferrer">Open in Apple Music</a></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="playlist-card">
-      <h2>High Vibrations Music</h2>
-      <div class="playlist-wrapper">
-        <iframe 
-          title="High Vibrations Music Playlist"
-          src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"
-          allow="autoplay *; encrypted-media *;"
-          frameborder="0"
-          loading="lazy"
-          class="playlist-iframe"
-        ></iframe>
-        <div class="playlist-fallback">
-          <p>Unable to load playlist? <a href="https://music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13" target="_blank" rel="noopener noreferrer">Open in Apple Music</a></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="playlist-card">
-      <h2>Afrowave</h2>
-      <div class="playlist-wrapper">
-        <iframe 
-          title="Afrowave Playlist"
-          src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"
-          allow="autoplay *; encrypted-media *;"
-          frameborder="0"
-          loading="lazy"
-          class="playlist-iframe"
-        ></iframe>
-        <div class="playlist-fallback">
-          <p>Unable to load playlist? <a href="https://music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE" target="_blank" rel="noopener noreferrer">Open in Apple Music</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Celestial Hub</title>
   <style>
-    .playlist-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      padding: 1rem;
+    body {
+      background: linear-gradient(135deg, #e3f2fd, #f1f8e9);
+      font-family: 'Courier New', monospace;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
-    .playlist-card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 1rem;
-      transition: transform 0.3s ease;
-    }
-
-    .playlist-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .playlist-wrapper {
-      position: relative;
-      width: 100%;
-      height: 450px;
-      background: #f5f5f5;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .playlist-iframe {
-      width: 100%;
+    .background-clouds {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 300%;
       height: 100%;
-      border: none;
+      background: url('https://i.imgur.com/8KUhD6O.png') repeat-x center;
+      animation: moveClouds 120s linear infinite;
+      z-index: -1;
+      opacity: 0.8;
     }
 
-    .playlist-fallback {
+    @keyframes moveClouds {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1200px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      padding: 20px;
+      z-index: 1;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      background: #b39ddb;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .tab {
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .tab:hover {
+      background: #d1c4e9;
+    }
+
+    .content {
       display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      padding: 1rem;
+      padding: 20px;
+      font-size: 1.2rem;
+      line-height: 1.8;
     }
 
-    .playlist-iframe:not([src]) + .playlist-fallback,
-    .playlist-iframe.error + .playlist-fallback {
+    .content.active {
       display: block;
     }
 
-    @media (max-width: 768px) {
-      .playlist-wrapper {
-        height: 380px;
-      }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .calendar-month {
+      padding: 15px;
+      background: #f3e5f5;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .calendar-month:hover {
+      background: #ce93d8;
+    }
+
+    iframe {
+      width: 100%;
+      height: 350px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .journal-prompt {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #e8f5e9;
+      border-radius: 10px;
     }
   </style>
+</head>
+<body>
+
+  <div class="background-clouds"></div>
+
+  <div class="container">
+    <div class="tabs">
+      <div class="tab" onclick="showContent('calendar')">📅 Calendar</div>
+      <div class="tab" onclick="showContent('schedule')">📓 Weekly Schedule</div>
+      <div class="tab" onclick="showContent('journal')">🖋️ Journal Prompts</div>
+      <div class="tab" onclick="showContent('music')">🎵 Music Hub</div>
+    </div>
+
+    <div class="content" id="calendar">
+      <h1>2025 Calendar</h1>
+      <div class="calendar">
+        <div class="calendar-month">January</div>
+        <div class="calendar-month">February</div>
+        <div class="calendar-month">March</div>
+        <div class="calendar-month">April</div>
+        <div class="calendar-month">May</div>
+        <div class="calendar-month">June</div>
+        <div class="calendar-month">July</div>
+        <div class="calendar-month">August</div>
+        <div class="calendar-month">September</div>
+        <div class="calendar-month">October</div>
+        <div class="calendar-month">November</div>
+        <div class="calendar-month">December</div>
+      </div>
+    </div>
+
+    <div class="content" id="schedule">
+      <h1>Weekly Schedule</h1>
+      <p>Monday: Gym at 4:45 AM, work, study, and writing assignments.</p>
+      <p>Tuesday: Work, book writing, and Celestial Hub coding.</p>
+      <p>Wednesday: Gym at 4:45 AM, Wine Down Wednesday (relax, wine, TV).</p>
+      <p>Thursday: Productivity day—focus on wrapping up work and school tasks.</p>
+      <p>Friday: Gym at 4:45 AM, decompress, and optional content creation.</p>
+      <p>Saturday: Sleep in, clean, gym, schoolwork from 5–8 PM.</p>
+      <p>Sunday: Yoga at the gym, meal prep, and content creation.</p>
+    </div>
+
+    <div class="content" id="journal">
+      <h1>Journal Prompts</h1>
+      <div class="journal-prompt">🌟 What does balance mean to you? How do you maintain it?</div>
+      <div class="journal-prompt">🌼 Describe a recent experience that made you feel truly grateful.</div>
+      <div class="journal-prompt">🦋 What are three small ways you can bring more joy into your life?</div>
+    </div>
+
+    <div class="content" id="music">
+      <h1>🎵 Music Hub 🎵</h1>
+      <h2>Rap Girlies</h2>
+      <iframe src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
+      <h2>High Vibrations Music</h2>
+      <iframe src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"></iframe>
+      <h2>Afrowave</h2>
+      <iframe src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
+    </div>
+  </div>
 
   <script>
-    // Handle iframe loading errors
-    document.querySelectorAll('.playlist-iframe').forEach(iframe => {
-      iframe.addEventListener('error', () => {
-        iframe.classList.add('error');
-      });
-    });
+    function showContent(section) {
+      const sections = document.querySelectorAll('.content');
+      sections.forEach(sec => sec.classList.remove('active'));
+      document.getElementById(section).classList.add('active');
+    }
 
-    // Add lazy loading for performance
-    const observerOptions = {
-      root: null,
-      rootMargin: '50px',
-      threshold: 0
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const iframe = entry.target;
-          if (!iframe.src) {
-            iframe.src = iframe.dataset.src;
-          }
-          observer.unobserve(iframe);
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.playlist-iframe').forEach(iframe => {
-      observer.observe(iframe);
-    });
+    showContent('calendar');
   </script>
-</div>
+
+</body>
+</html>
