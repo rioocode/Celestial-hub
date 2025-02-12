@@ -6,7 +6,7 @@
   <title>Celestial Hub</title>
   <style>
     body {
-      background: linear-gradient(135deg, #e3f2fd, #f1f8e9);
+      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
       font-family: 'Courier New', monospace;
       color: #333;
       margin: 0;
@@ -30,7 +30,7 @@
     .tabs {
       display: flex;
       justify-content: space-around;
-      background: #b39ddb;
+      background: #81d4fa;
       padding: 15px;
       border-radius: 10px;
     }
@@ -46,7 +46,7 @@
     }
 
     .tab:hover {
-      background: #d1c4e9;
+      background: #4fc3f7;
     }
 
     .content {
@@ -59,26 +59,6 @@
       display: block;
     }
 
-    .month-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .month {
-      padding: 15px;
-      background: #f3e5f5;
-      border-radius: 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .month:hover {
-      background: #ce93d8;
-    }
-
     .calendar {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -88,7 +68,7 @@
 
     .calendar-day {
       padding: 15px;
-      background: #f3e5f5;
+      background: #e1f5fe;
       border-radius: 10px;
       text-align: center;
       cursor: pointer;
@@ -96,16 +76,15 @@
     }
 
     .calendar-day:hover {
-      background: #ce93d8;
+      background: #b3e5fc;
     }
 
     .task-list {
       margin-top: 20px;
       padding: 15px;
-      background: #e8f5e9;
+      background: #fce4ec;
       border-radius: 10px;
     }
-
   </style>
 </head>
 <body>
@@ -120,23 +99,9 @@
     <!-- Calendar Section -->
     <div class="content" id="calendar">
       <h1>2025 Calendar</h1>
-      <div class="month-grid">
-        <div class="month" onclick="showMonth('January')">January</div>
-        <div class="month" onclick="showMonth('February')">February</div>
-        <div class="month" onclick="showMonth('March')">March</div>
-        <div class="month" onclick="showMonth('April')">April</div>
-        <div class="month" onclick="showMonth('May')">May</div>
-        <div class="month" onclick="showMonth('June')">June</div>
-        <div class="month" onclick="showMonth('July')">July</div>
-        <div class="month" onclick="showMonth('August')">August</div>
-        <div class="month" onclick="showMonth('September')">September</div>
-        <div class="month" onclick="showMonth('October')">October</div>
-        <div class="month" onclick="showMonth('November')">November</div>
-        <div class="month" onclick="showMonth('December')">December</div>
-      </div>
       <div class="calendar" id="month-view"></div>
       <div class="task-list" id="task-list">
-        <p>Select a date to see your tasks.</p>
+        <p>Select a date to see your tasks and TESU deadlines.</p>
       </div>
     </div>
 
@@ -153,6 +118,7 @@
       <h1>🎵 Music Hub 🎵</h1>
       <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
       <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"></iframe>
+      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
     </div>
   </div>
 
@@ -175,10 +141,11 @@
     function showTasks(date) {
       const taskList = document.getElementById('task-list');
       const tasks = {
-        'Monday': '<ul><li>4:45 AM: Gym</li><li>8:00 AM - Work</li><li>Evening: Study Block</li></ul>',
-        'Wednesday': '<ul><li>4:45 AM: Gym</li><li>Wine Down Wednesday</li></ul>'
+        'February 13': '<ul><li>TESU: Written Assignment 2 Due (ETH-2200)</li><li>Gym at 4:45 AM</li><li>Evening: Study Block</li></ul>',
+        'February 17': '<ul><li>TESU: Leadership Interview Due (ETH-2200)</li><li>Wine Down Wednesday</li></ul>'
+        // Add more tasks for each date based on your schedule and TESU events
       };
-      taskList.innerHTML = tasks[date.split(' ')[0]] || `<p>Tasks for ${date}.</p>`;
+      taskList.innerHTML = tasks[date] || `<p>Tasks for ${date}.</p>`;
     }
 
     showContent('calendar');
