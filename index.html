@@ -85,7 +85,7 @@
       margin-top: 20px;
     }
 
-    .calendar-month {
+    .calendar-day {
       padding: 15px;
       background: #f3e5f5;
       border-radius: 10px;
@@ -94,8 +94,22 @@
       transition: background 0.3s ease;
     }
 
-    .calendar-month:hover {
+    .calendar-day:hover {
       background: #ce93d8;
+    }
+
+    .task-list {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e8f5e9;
+      border-radius: 10px;
+    }
+
+    .sub-section {
+      margin-top: 20px;
+      padding: 15px;
+      background: #fce4ec;
+      border-radius: 10px;
     }
 
     iframe {
@@ -107,12 +121,6 @@
       margin-bottom: 20px;
     }
 
-    .journal-prompt {
-      margin-bottom: 20px;
-      padding: 15px;
-      background: #e8f5e9;
-      border-radius: 10px;
-    }
   </style>
 </head>
 <body>
@@ -122,15 +130,66 @@
   <div class="container">
     <div class="tabs">
       <div class="tab" onclick="showContent('calendar')">📅 Calendar</div>
-      <div class="tab" onclick="showContent('schedule')">📓 Weekly Schedule</div>
-      <div class="tab" onclick="showContent('journal')">🖋️ Journal Prompts</div>
+      <div class="tab" onclick="showContent('journal')">🖋️ Notebook</div>
       <div class="tab" onclick="showContent('music')">🎵 Music Hub</div>
     </div>
 
+    <!-- Calendar with Full-Year Embedded Tasks -->
     <div class="content" id="calendar">
       <h1>2025 Calendar</h1>
       <div class="calendar">
-        <div class="calendar-month">January</div>
-        <div class="calendar-month">February</div>
-        <div class="calendar-month">March</div>
-        <div class="calendar-month">April</di
+        <div class="calendar-day" onclick="showTasks('Monday')">Monday</div>
+        <div class="calendar-day" onclick="showTasks('Tuesday')">Tuesday</div>
+        <div class="calendar-day" onclick="showTasks('Wednesday')">Wednesday</div>
+        <div class="calendar-day" onclick="showTasks('Thursday')">Thursday</div>
+        <div class="calendar-day" onclick="showTasks('Friday')">Friday</div>
+        <div class="calendar-day" onclick="showTasks('Saturday')">Saturday</div>
+        <div class="calendar-day" onclick="showTasks('Sunday')">Sunday</div>
+      </div>
+      <div class="task-list" id="task-list">
+        <p>Select a day to see your tasks.</p>
+      </div>
+    </div>
+
+    <!-- Notebook with Journal Prompts, Gratitude, and Free Notes -->
+    <div class="content" id="journal">
+      <h1>Notebook</h1>
+      <div class="sub-section">🌟 <strong>Journal Prompts:</strong> Reflect on your personal growth journey.</div>
+      <div class="sub-section">🌼 <strong>Gratitude Affirmations:</strong> "I am grounded, grateful, and growing." Repeat this aloud.</div>
+      <div class="sub-section">📝 <strong>Free Notes:</strong> Write down your thoughts and ideas here.</div>
+    </div>
+
+    <!-- Music Hub -->
+    <div class="content" id="music">
+      <h1>🎵 Music Hub 🎵</h1>
+      <h2>Rap Girlies</h2>
+      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
+      <h2>High Vibrations Music</h2>
+      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"></iframe>
+      <h2>Afrowave</h2>
+      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
+    </div>
+  </div>
+
+  <script>
+    function showContent(section) {
+      const sections = document.querySelectorAll('.content');
+      sections.forEach(sec => sec.classList.remove('active'));
+      document.getElementById(section).classList.add('active');
+    }
+
+    function showTasks(day) {
+      const taskList = document.getElementById('task-list');
+      const tasks = {
+        'Monday': '<p><strong>Monday Tasks:</strong></p><ul><li>4:45 AM: Gym Session</li><li>8:00 AM - 4:30 PM: Work</li><li>Evening: Study & Writing Assignments</li></ul>',
+        'Tuesday': '<p><strong>Tuesday Tasks:</strong></p><ul><li>Work on Book</li><li>1-hour Celestial Hub Project</li></ul>',
+        'Wednesday': '<p><strong>Wednesday Tasks:</strong></p><ul><li>4:45 AM: Gym</li><li>Wine Down Wednesday</li><li>Relax & Watch TV</li></ul>'
+      };
+      taskList.innerHTML = tasks[day] || '<p>No tasks scheduled for this day.</p>';
+    }
+
+    showContent('calendar');
+  </script>
+
+</body>
+</html>
