@@ -6,7 +6,7 @@
   <title>Celestial Hub</title>
   <style>
     body {
-      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      background: linear-gradient(135deg, #e3f2fd, #f1f8e9);
       font-family: 'Courier New', monospace;
       color: #333;
       margin: 0;
@@ -30,7 +30,7 @@
     .tabs {
       display: flex;
       justify-content: space-around;
-      background: #81d4fa;
+      background: #b39ddb;
       padding: 15px;
       border-radius: 10px;
     }
@@ -46,7 +46,7 @@
     }
 
     .tab:hover {
-      background: #4fc3f7;
+      background: #d1c4e9;
     }
 
     .content {
@@ -68,7 +68,7 @@
 
     .calendar-day {
       padding: 15px;
-      background: #e1f5fe;
+      background: #f3e5f5;
       border-radius: 10px;
       text-align: center;
       cursor: pointer;
@@ -76,14 +76,23 @@
     }
 
     .calendar-day:hover {
-      background: #b3e5fc;
+      background: #ce93d8;
     }
 
     .task-list {
       margin-top: 20px;
       padding: 15px;
-      background: #fce4ec;
+      background: #e8f5e9;
       border-radius: 10px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 150px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -142,8 +151,10 @@
       const taskList = document.getElementById('task-list');
       const tasks = {
         'February 13': '<ul><li>TESU: Written Assignment 2 Due (ETH-2200)</li><li>Gym at 4:45 AM</li><li>Evening: Study Block</li></ul>',
-        'February 17': '<ul><li>TESU: Leadership Interview Due (ETH-2200)</li><li>Wine Down Wednesday</li></ul>'
-        // Add more tasks for each date based on your schedule and TESU events
+        'February 17': '<ul><li>TESU: Leadership Interview Due (ETH-2200)</li><li>Wine Down Wednesday</li></ul>',
+        'Monday': '<ul><li>4:45 AM: Gym</li><li>8:00 AM - Work</li><li>Evening: Writing Assignments</li></ul>',
+        'Tuesday': '<ul><li>Work on Book</li><li>1-hour Celestial Hub Project</li></ul>'
+        // Add more tasks for each date and weekday
       };
       taskList.innerHTML = tasks[date] || `<p>Tasks for ${date}.</p>`;
     }
