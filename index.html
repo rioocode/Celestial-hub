@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Celestial Hub - Full Integration</title>
+  <title>Celestial Hub - Music Hub</title>
   <style>
     body {
       background: linear-gradient(135deg, #f3e5ab, #d7ccc8, #f8bbd0);
@@ -15,6 +15,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
     }
     .notebook {
       width: 900px;
@@ -23,120 +24,96 @@
       border: 8px solid #bdbdbd;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow-y: scroll;
+      z-index: 1;
     }
-    .tabs {
-      display: flex;
-      justify-content: space-around;
-      background: #e1bee7;
-      border-bottom: 2px solid #bdbdbd;
-      padding: 10px;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-    }
-    .tab {
-      padding: 10px 20px;
-      background: rgba(255, 255, 255, 0.7);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      font-weight: bold;
-    }
-    .tab:hover {
-      background: #ce93d8;
-    }
-    .content {
-      padding: 20px;
-      height: calc(100% - 60px);
-      overflow-y: auto;
-      font-size: 1.1rem;
-      display: none;
-    }
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-gap: 5px;
-      padding: 20px;
-    }
-    .day {
-      padding: 15px;
-      background: #e1bee7;
-      border-radius: 8px;
+    h1 {
       text-align: center;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
+      font-size: 1.5rem;
     }
-    .day:hover {
-      background: #ce93d8;
+    h2 {
+      margin: 15px 0 5px;
+    }
+    p {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 10px;
     }
     iframe {
       width: 100%;
       height: 300px;
       border: none;
       border-radius: 8px;
-      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .sparkles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: sparkle 3s infinite ease-in-out;
+    }
+    @keyframes sparkle {
+      0% {
+        transform: translateY(-10px) scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
 
   <div class="notebook">
-    <div class="tabs">
-      <div class="tab" onclick="showContent('calendar')">📅 Calendar</div>
-      <div class="tab" onclick="showContent('notes')">📝 Notes</div>
-      <div class="tab" onclick="showContent('music')">🎵 Music</div>
-      <div class="tab" onclick="showContent('settings')">⚙️ Settings</div>
-    </div>
+    <h1>🎵 Music Hub 🎵</h1>
+    
+    <h2>Rap Girlies</h2>
+    <p>Boss up with empowering anthems. Perfect for feeling confident and unstoppable.</p>
+    <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" 
+    src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
 
-    <div class="content" id="calendar">
-      <h1>February 2025 Calendar</h1>
-      <div class="calendar">
-        <div class="day" onclick="showTasks('Feb 1')">1</div>
-        <div class="day" onclick="showTasks('Feb 2')">2</div>
-        <!-- Add all days up to 28 -->
-        <div class="day" onclick="showTasks('Feb 28')">28</div>
-      </div>
-      <div class="task-details" id="task-details">
-        <h2>Task Details</h2>
-        <p id="task-info">Click on a date to view tasks.</p>
-      </div>
-    </div>
+    <h2>High Vibrations Music</h2>
+    <p>Raise your frequency with soothing, uplifting tunes that bring balance and harmony.</p>
+    <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" 
+    src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"></iframe>
 
-    <div class="content" id="notes">
-      <h1>Notes</h1>
-      <p>Write down your ideas and keep them safe.</p>
-    </div>
-
-    <div class="content" id="music">
-      <h1>Music Playlist</h1>
-      <p>Enjoy your Apple Music playlist:</p>
-      <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" 
-      src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
-    </div>
-
-    <div class="content" id="settings">
-      <h1>Settings</h1>
-      <p>Customize your Celestial Hub experience here.</p>
-    </div>
+    <h2>Afrowave</h2>
+    <p>Catch the vibe with afro-fusion beats and high-energy rhythms that keep you moving.</p>
+    <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" 
+    src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
   </div>
 
+  <div class="sparkles"></div>
+
   <script>
-    function showContent(section) {
-      const sections = document.querySelectorAll('.content');
-      sections.forEach(sec => sec.style.display = 'none');
-      document.getElementById(section).style.display = 'block';
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = Math.random() * 100 + 'vw';
+      sparkle.style.animationDuration = Math.random() * 3 + 2 + 's';
+      document.querySelector('.sparkles').appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 5000);
     }
-    
-    function showTasks(date) {
-      const taskDetails = document.getElementById('task-details');
-      const taskInfo = document.getElementById('task-info');
-      taskDetails.style.display = 'block';
-      taskInfo.innerHTML = `<strong>Tasks for ${date}:</strong><br>
-      - Gym from 4:45 AM to 6:30 AM<br>
-      - Work from 8:00 AM to 4:30 PM<br>
-      - Study Microsoft Certification for 30 mins<br>
-      - Complete any assigned coursework.`;
-    }
+
+    setInterval(createSparkle, 150);
   </script>
 
 </body>
