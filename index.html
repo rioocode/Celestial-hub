@@ -14,6 +14,7 @@
             margin: 0;
             padding: 0;
             text-align: center;
+            overflow: hidden;
         }
 
         .container {
@@ -25,6 +26,8 @@
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             margin-top: 30px;
+            height: 90vh; /* Expanding height */
+            overflow-y: auto; /* Enables scrolling if needed */
         }
 
         h1 {
@@ -76,19 +79,6 @@
             display: block;
         }
 
-        /* Music Section */
-        .music-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-        }
-
-        .music-container iframe {
-            width: 32%;
-            height: 180px;
-            border-radius: 5px;
-        }
-
         /* Calendar Section */
         .calendar-header {
             display: grid;
@@ -127,6 +117,8 @@
             border-radius: 10px;
             color: black;
             display: none;
+            max-height: 200px;
+            overflow-y: auto;
         }
 
         #task-list {
@@ -204,15 +196,25 @@
             });
         });
 
-        document.addEventListener("DOMContentLoaded", () => {
+        const weeklyTasks = {
+            "Monday": ["4:45 AM - Gym", "6:15 AM - Shower", "8:00 AM - 4:30 PM - Work", "7:00 PM - 9:00 PM - Writing Assignments"],
+            "Tuesday": ["8:00 AM - 4:30 PM - Work", "7:00 PM - 8:00 PM - Book Writing", "8:00 PM - 9:00 PM - Celestial Hub Updates"],
+            "Wednesday": ["4:45 AM - Gym", "6:15 AM - Shower", "8:00 AM - 4:30 PM - Work", "7:00 PM - 10:00 PM - Wine Down Wednesday"],
+            "Thursday": ["8:00 AM - 4:30 PM - Work", "7:00 PM - 9:00 PM - Productivity Focus"],
+            "Friday": ["4:45 AM - Gym", "6:15 AM - Shower", "8:00 AM - 4:30 PM - Work", "7:00 PM - 10:00 PM - Unwind & Relax"]
+        };
+
+        function createCalendar() {
             document.querySelector(".calendar-grid").innerHTML = Array.from({length: 28}, (_, i) => 
-                `<div class="calendar-day" onclick="showTasks(${i+1})">${i+1}</div>`).join('');
-        });
+                `<div class="calendar-day" onclick="showTasks('${Object.keys(weeklyTasks)[i % 5]}')">${i+1}</div>`).join('');
+        }
 
         function showTasks(day) {
             document.getElementById("task-display").style.display = "block";
-            document.getElementById("task-list").innerHTML = `<li><input type="checkbox"> Task for February ${day}</li>`;
+            document.getElementById("task-list").innerHTML = weeklyTasks[day].map(task => `<li><input type="checkbox"> ${task}</li>`).join('');
         }
+
+        document.addEventListener("DOMContentLoaded", createCalendar);
     </script>
 
 </body>
