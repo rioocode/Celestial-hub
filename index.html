@@ -1,70 +1,187 @@
-import tkinter as tk
-from tkinter import ttk
-import calendar
-import datetime
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celestial Hub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
 
-# Initialize main window
-root = tk.Tk()
-root.title("Celestial Hub")
-root.geometry("900x600")  # Adjusted display size (smaller width)
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
 
-# Define colors and fonts
-bg_color = "#1a1a2e"
-fg_color = "#ffffff"
-highlight_color = "#ffcc00"
-root.configure(bg=bg_color)
+        h1, h2 {
+            color: #ffcc00;
+        }
 
-# ---- MUSIC SECTION ----
-def create_music_section(parent):
-    music_frame = ttk.LabelFrame(parent, text="Music", padding=10)
-    music_frame.pack(fill="both", expand=True, padx=10, pady=5)
+        /* Music Section */
+        #music {
+            margin-bottom: 30px;
+        }
 
-    # Playlists (Vertical Tabs)
-    playlists = ["Morning Vibes", "Workout Energy", "Relax & Unwind", "Focus & Study"]
-    for playlist in playlists:
-        ttk.Label(music_frame, text=playlist, font=("Arial", 12, "bold")).pack(anchor="w", pady=2)
+        .music-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-    # Streaming Link (Modify this to your actual playlist link)
-    ttk.Label(music_frame, text="🎵 Listen Here", foreground=highlight_color, cursor="hand2").pack(anchor="w")
+        .playlist {
+            background: #ffcc00;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: black;
+        }
 
-# ---- CALENDAR SECTION ----
-def create_calendar_section(parent):
-    calendar_frame = ttk.LabelFrame(parent, text="February 2025 Schedule", padding=10)
-    calendar_frame.pack(fill="both", expand=True, padx=10, pady=5)
+        .playlist:hover {
+            background: #ffaa00;
+        }
 
-    # Generate February Calendar
-    dates = [datetime.date(2025, 2, day) for day in range(1, 29)]
-    schedule = {
-        "Monday": ["Gym 4:45 AM - 6:30 AM", "Work 8 AM - 5 PM", "Writing 7 PM - 9 PM"],
-        "Tuesday": ["Work 8 AM - 5 PM", "Book Writing 7 PM - 8 PM", "Celestial Hub 8 PM - 9 PM"],
-        "Wednesday": ["Gym 4:45 AM - 6:30 AM", "Work 8 AM - 5 PM", "Wine Down 7 PM - 10 PM"],
-        "Thursday": ["Work 8 AM - 5 PM", "Productivity Tasks 7 PM - 9 PM"],
-        "Friday": ["Gym 4:45 AM - 6:30 AM", "Work 8 AM - 5 PM", "Unwind 7 PM - 10 PM"],
-        "Saturday": ["Gym (Late Morning)", "Cleaning", "Schoolwork 5 PM - 8 PM", "Free Time"],
-        "Sunday": ["Yoga (Morning)", "Light Housework", "Meal Prep", "Schoolwork", "Content Creation"]
-    }
+        /* Calendar Section */
+        #calendar {
+            margin-top: 30px;
+        }
 
-    # Display structured calendar
-    for date in dates:
-        day_name = date.strftime("%A")
-        tasks = schedule.get(day_name, [])
-        day_label = ttk.Label(calendar_frame, text=f"{date.strftime('%b %d, %Y')} ({day_name}):", font=("Arial", 10, "bold"))
-        day_label.pack(anchor="w", pady=2)
-        task_label = ttk.Label(calendar_frame, text=" | ".join(tasks), wraplength=800, foreground=fg_color)
-        task_label.pack(anchor="w", padx=15)
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 20px;
+        }
 
-# Create Tabs
-notebook = ttk.Notebook(root)
-notebook.pack(fill="both", expand=True, padx=10, pady=10)
+        .calendar-day {
+            background: #ffcc00;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: black;
+        }
 
-music_tab = ttk.Frame(notebook)
-calendar_tab = ttk.Frame(notebook)
+        .calendar-day:hover {
+            background: #ffaa00;
+        }
 
-notebook.add(music_tab, text="Music")
-notebook.add(calendar_tab, text="Calendar")
+        #task-display {
+            margin-top: 20px;
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
 
-create_music_section(music_tab)
-create_calendar_section(calendar_tab)
+        #task-list {
+            list-style-type: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
 
-# Run the application
-root.mainloop()
+    <div class="container">
+        <h1>Celestial Hub</h1>
+
+        <!-- Music Section -->
+        <section id="music">
+            <h2>Music</h2>
+            <div class="music-container">
+                <div class="playlist" onclick="openPlaylist('morning-vibes')">🎵 Morning Vibes</div>
+                <div class="playlist" onclick="openPlaylist('workout-energy')">💪 Workout Energy</div>
+                <div class="playlist" onclick="openPlaylist('relax-unwind')">🛀 Relax & Unwind</div>
+                <div class="playlist" onclick="openPlaylist('focus-study')">📚 Focus & Study</div>
+            </div>
+            <p id="playlist-display">Click a playlist to view.</p>
+        </section>
+
+        <!-- Calendar Section -->
+        <section id="calendar">
+            <h2>February 2025</h2>
+            <div class="calendar-grid">
+                <!-- Days will be inserted dynamically -->
+            </div>
+            <div id="task-display">
+                <h3>Tasks for Selected Day:</h3>
+                <ul id="task-list"></ul>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            createCalendar();
+        });
+
+        // ** Music Section Handling **
+        function openPlaylist(playlist) {
+            const playlistDisplay = document.getElementById("playlist-display");
+            const playlists = {
+                "morning-vibes": "🌞 Morning Vibes Playlist Streaming...",
+                "workout-energy": "💪 Workout Energy Playlist Streaming...",
+                "relax-unwind": "🛀 Relax & Unwind Playlist Streaming...",
+                "focus-study": "📚 Focus & Study Playlist Streaming..."
+            };
+
+            playlistDisplay.innerText = playlists[playlist] || "Playlist not found.";
+        }
+
+        // ** Calendar Section Handling **
+        function createCalendar() {
+            const calendarGrid = document.querySelector(".calendar-grid");
+            const tasksForFebruary = {
+                "2025-02-01": ["Gym (Late Morning)", "Cleaning", "Schoolwork 5 PM - 8 PM"],
+                "2025-02-02": ["Yoga (Morning)", "Light Housework", "Meal Prep", "Content Creation"],
+                "2025-02-03": ["Gym 4:45 AM - 6:30 AM", "Work 8 AM - 5 PM", "Writing 7 PM - 9 PM"],
+                "2025-02-04": ["Work 8 AM - 5 PM", "Book Writing 7 PM - 8 PM", "Celestial Hub Updates 8 PM - 9 PM"],
+                "2025-02-05": ["Gym 4:45 AM - 6:30 AM", "Work 8 AM - 5 PM", "Wine Down Wednesday"],
+                "2025-02-06": ["Work 8 AM - 5 PM", "Productivity Focus 7 PM - 9 PM"],
+                "2025-02-07": ["Gym 4:45 AM - 6:30 AM", "Work 8 AM - 5 PM", "Relaxation Night"],
+                "2025-02-08": ["Gym (Late Morning)", "Cleaning", "Schoolwork 5 PM - 8 PM"],
+                "2025-02-09": ["Yoga", "Meal Prep", "Content Creation"],
+                "2025-02-10": ["Work 8 AM - 5 PM", "Writing 7 PM - 9 PM"]
+            };
+
+            for (let day = 1; day <= 28; day++) {
+                const dateKey = `2025-02-${String(day).padStart(2, "0")}`;
+                const dayElement = document.createElement("div");
+                dayElement.classList.add("calendar-day");
+                dayElement.innerText = day;
+                dayElement.onclick = function() {
+                    showTasks(dateKey, tasksForFebruary);
+                };
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        function showTasks(date, tasksForFebruary) {
+            const taskDisplay = document.getElementById("task-display");
+            const taskList = document.getElementById("task-list");
+
+            taskList.innerHTML = ""; // Clear previous tasks
+            if (tasksForFebruary[date]) {
+                tasksForFebruary[date].forEach(task => {
+                    let li = document.createElement("li");
+                    li.innerText = task;
+                    taskList.appendChild(li);
+                });
+            } else {
+                taskList.innerHTML = "<li>No tasks for this day.</li>";
+            }
+
+            taskDisplay.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
