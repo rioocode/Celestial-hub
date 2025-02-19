@@ -66,6 +66,29 @@
             height: 22px;
         }
 
+        /* Content Sections */
+        .content {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        /* Music Section */
+        .music-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .music-container iframe {
+            width: 32%;
+            height: 180px;
+            border-radius: 5px;
+        }
+
         /* Calendar Section */
         .calendar-header {
             display: grid;
@@ -132,6 +155,7 @@
         <div class="tabs">
             <div class="tab active" data-tab="calendar"><img src="https://cdn-icons-png.flaticon.com/512/747/747310.png"> Calendar</div>
             <div class="tab" data-tab="notes"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"> Notes</div>
+            <div class="tab" data-tab="music"><img src="https://cdn-icons-png.flaticon.com/512/726/726623.png"> Music</div>
         </div>
 
         <!-- Calendar Section -->
@@ -156,6 +180,17 @@
                 <div class="note">🌸 **Positive Vibes:** "I radiate confidence, kindness, and love."</div>
             </div>
         </div>
+
+        <!-- Music Section -->
+        <div class="content" id="music">
+            <h2>🎵 Your Playlists</h2>
+            <div class="music-container">
+                <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
+                <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
+                <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -169,40 +204,15 @@
             });
         });
 
-        const weeklyTasks = {
-            "Monday": ["4:45 AM - Gym", "6:15 AM - Shower", "8:00 AM - 4:30 PM - Work", "7:00 PM - 9:00 PM - Writing Assignments"],
-            "Tuesday": ["8:00 AM - 4:30 PM - Work", "7:00 PM - 8:00 PM - Book Writing", "8:00 PM - 9:00 PM - Celestial Hub Updates"],
-            "Wednesday": ["4:45 AM - Gym", "6:15 AM - Shower", "8:00 AM - 4:30 PM - Work", "7:00 PM - 10:00 PM - Wine Down Wednesday"],
-            "Thursday": ["8:00 AM - 4:30 PM - Work", "7:00 PM - 9:00 PM - Productivity Focus"],
-            "Friday": ["4:45 AM - Gym", "6:15 AM - Shower", "8:00 AM - 4:30 PM - Work", "7:00 PM - 10:00 PM - Unwind & Relax"],
-            "Saturday": ["Late Morning - Gym", "12:00 PM - Lunch & Cleaning", "5:00 PM - 8:00 PM - Schoolwork", "8:00 PM - Free Time"],
-            "Sunday": ["Morning - Yoga", "12:00 PM - Light Housework", "2:00 PM - Meal Prep", "4:00 PM - Schoolwork", "6:00 PM - Content Creation"]
-        };
-
-        function createCalendar() {
-            const calendarGrid = document.querySelector(".calendar-grid");
-            for (let day = 1; day <= 28; day++) {
-                const date = new Date(2025, 1, day);
-                const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
-
-                const dayElement = document.createElement("div");
-                dayElement.classList.add("calendar-day");
-                dayElement.innerText = day;
-                dayElement.onclick = function() {
-                    showTasks(dayName);
-                };
-                calendarGrid.appendChild(dayElement);
-            }
-        }
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector(".calendar-grid").innerHTML = Array.from({length: 28}, (_, i) => 
+                `<div class="calendar-day" onclick="showTasks(${i+1})">${i+1}</div>`).join('');
+        });
 
         function showTasks(day) {
-            const taskDisplay = document.getElementById("task-display");
-            const taskList = document.getElementById("task-list");
-            taskList.innerHTML = weeklyTasks[day].map(task => `<li><input type="checkbox" class="task-checkbox"> ${task}</li>`).join("");
-            taskDisplay.style.display = "block";
+            document.getElementById("task-display").style.display = "block";
+            document.getElementById("task-list").innerHTML = `<li><input type="checkbox"> Task for February ${day}</li>`;
         }
-
-        document.addEventListener("DOMContentLoaded", createCalendar);
     </script>
 
 </body>
