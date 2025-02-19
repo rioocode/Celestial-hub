@@ -1,166 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Celestial Hub</title>
-  <style>
-    body {
-      background: linear-gradient(135deg, #e3f2fd, #f1f8e9);
-      font-family: 'Courier New', monospace;
-      color: #333;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+import tkinter as tk
+from tkinter import ttk
+import calendar
+import datetime
+
+# Initialize main window
+root = tk.Tk()
+root.title("Celestial Hub")
+root.geometry("900x600")  # Adjusted display size (smaller width)
+
+# Define colors and fonts
+bg_color = "#1a1a2e"
+fg_color = "#ffffff"
+highlight_color = "#ffcc00"
+root.configure(bg=bg_color)
+
+# ---- MUSIC SECTION ----
+def create_music_section(parent):
+    music_frame = ttk.LabelFrame(parent, text="Music", padding=10)
+    music_frame.pack(fill="both", expand=True, padx=10, pady=5)
+
+    # Playlists (Vertical Tabs)
+    playlists = ["Morning Vibes", "Workout Energy", "Relax & Unwind", "Focus & Study"]
+    for playlist in playlists:
+        ttk.Label(music_frame, text=playlist, font=("Arial", 12, "bold")).pack(anchor="w", pady=2)
+
+    # Streaming Link (Modify this to your actual playlist link)
+    ttk.Label(music_frame, text="🎵 Listen Here", foreground=highlight_color, cursor="hand2").pack(anchor="w")
+
+# ---- CALENDAR SECTION ----
+def create_calendar_section(parent):
+    calendar_frame = ttk.LabelFrame(parent, text="February 2025 Schedule", padding=10)
+    calendar_frame.pack(fill="both", expand=True, padx=10, pady=5)
+
+    # Generate February Calendar
+    dates = [datetime.date(2025, 2, day) for day in range(1, 29)]
+    schedule = {
+        "Monday": ["Gym 4:45 AM - 6:30 AM", "Work 8 AM - 5 PM", "Writing 7 PM - 9 PM"],
+        "Tuesday": ["Work 8 AM - 5 PM", "Book Writing 7 PM - 8 PM", "Celestial Hub 8 PM - 9 PM"],
+        "Wednesday": ["Gym 4:45 AM - 6:30 AM", "Work 8 AM - 5 PM", "Wine Down 7 PM - 10 PM"],
+        "Thursday": ["Work 8 AM - 5 PM", "Productivity Tasks 7 PM - 9 PM"],
+        "Friday": ["Gym 4:45 AM - 6:30 AM", "Work 8 AM - 5 PM", "Unwind 7 PM - 10 PM"],
+        "Saturday": ["Gym (Late Morning)", "Cleaning", "Schoolwork 5 PM - 8 PM", "Free Time"],
+        "Sunday": ["Yoga (Morning)", "Light Housework", "Meal Prep", "Schoolwork", "Content Creation"]
     }
 
-    .container {
-      width: 95%;
-      max-width: 1200px;
-      background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      padding: 20px;
-    }
+    # Display structured calendar
+    for date in dates:
+        day_name = date.strftime("%A")
+        tasks = schedule.get(day_name, [])
+        day_label = ttk.Label(calendar_frame, text=f"{date.strftime('%b %d, %Y')} ({day_name}):", font=("Arial", 10, "bold"))
+        day_label.pack(anchor="w", pady=2)
+        task_label = ttk.Label(calendar_frame, text=" | ".join(tasks), wraplength=800, foreground=fg_color)
+        task_label.pack(anchor="w", padx=15)
 
-    .tabs {
-      display: flex;
-      justify-content: space-around;
-      background: #b39ddb;
-      padding: 15px;
-      border-radius: 10px;
-    }
+# Create Tabs
+notebook = ttk.Notebook(root)
+notebook.pack(fill="both", expand=True, padx=10, pady=10)
 
-    .tab {
-      padding: 15px 20px;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
+music_tab = ttk.Frame(notebook)
+calendar_tab = ttk.Frame(notebook)
 
-    .tab:hover {
-      background: #d1c4e9;
-    }
+notebook.add(music_tab, text="Music")
+notebook.add(calendar_tab, text="Calendar")
 
-    .content {
-      display: none;
-      padding: 20px;
-      font-size: 1.2rem;
-    }
+create_music_section(music_tab)
+create_calendar_section(calendar_tab)
 
-    .content.active {
-      display: block;
-    }
-
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .calendar-day {
-      padding: 15px;
-      background: #f3e5f5;
-      border-radius: 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .calendar-day:hover {
-      background: #ce93d8;
-    }
-
-    .task-list {
-      margin-top: 20px;
-      padding: 15px;
-      background: #e8f5e9;
-      border-radius: 10px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 150px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="container">
-    <div class="tabs">
-      <div class="tab" onclick="showContent('calendar')">📅 Calendar</div>
-      <div class="tab" onclick="showContent('journal')">🖋️ Notebook</div>
-      <div class="tab" onclick="showContent('music')">🎵 Music Hub</div>
-    </div>
-
-    <!-- Calendar Section -->
-    <div class="content" id="calendar">
-      <h1>2025 Calendar</h1>
-      <div class="calendar" id="month-view"></div>
-      <div class="task-list" id="task-list">
-        <p>Select a date to see your tasks and TESU deadlines.</p>
-      </div>
-    </div>
-
-    <!-- Notebook Section -->
-    <div class="content" id="journal">
-      <h1>Notebook</h1>
-      <div class="task-list">🌟 <strong>Journal Prompts:</strong> Reflect on your personal growth journey.</div>
-      <div class="task-list">🌼 <strong>Gratitude Affirmations:</strong> "I am grounded, grateful, and growing."</div>
-      <div class="task-list">📝 <strong>Free Notes:</strong> Write your thoughts and reflections here.</div>
-    </div>
-
-    <!-- Music Hub Section -->
-    <div class="content" id="music">
-      <h1>🎵 Music Hub 🎵</h1>
-      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
-      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"></iframe>
-      <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
-    </div>
-  </div>
-
-  <script>
-    function showContent(section) {
-      const sections = document.querySelectorAll('.content');
-      sections.forEach(sec => sec.classList.remove('active'));
-      document.getElementById(section).classList.add('active');
-    }
-
-    function showMonth(month) {
-      const monthView = document.getElementById('month-view');
-      let days = '';
-      for (let i = 1; i <= 31; i++) {
-        days += `<div class="calendar-day" onclick="showTasks('${month} ${i}')">${month} ${i}</div>`;
-      }
-      monthView.innerHTML = days;
-    }
-
-    function showTasks(date) {
-      const taskList = document.getElementById('task-list');
-      const tasks = {
-        'February 13': '<ul><li>TESU: Written Assignment 2 Due (ETH-2200)</li><li>Gym at 4:45 AM</li><li>Evening: Study Block</li></ul>',
-        'February 17': '<ul><li>TESU: Leadership Interview Due (ETH-2200)</li><li>Wine Down Wednesday</li></ul>',
-        'Monday': '<ul><li>4:45 AM: Gym</li><li>8:00 AM - Work</li><li>Evening: Writing Assignments</li></ul>',
-        'Tuesday': '<ul><li>Work on Book</li><li>1-hour Celestial Hub Project</li></ul>'
-        // Add more tasks for each date and weekday
-      };
-      taskList.innerHTML = tasks[date] || `<p>Tasks for ${date}.</p>`;
-    }
-
-    showContent('calendar');
-  </script>
-
-</body>
-</html>
+# Run the application
+root.mainloop()
