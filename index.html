@@ -66,43 +66,20 @@
             height: 22px;
         }
 
-        /* Content Sections */
-        .content {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .content.active {
-            display: block;
-        }
-
-        /* Music Section */
-        .music-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-        }
-
-        .music-container iframe {
-            width: 32%;
-            height: 180px;
-            border-radius: 5px;
-        }
-
         /* Calendar Section */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            margin-top: 20px;
-        }
-
         .calendar-header {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             font-weight: bold;
             color: #6A7FDB;
             margin-bottom: 5px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 20px;
         }
 
         .calendar-day {
@@ -129,20 +106,21 @@
             display: none;
         }
 
-        /* Notes Section */
-        .notes-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        #task-list {
+            list-style-type: none;
+            padding: 0;
         }
 
-        .note {
-            background: #FFE5EC;
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            color: #6A7FDB;
+        #task-list li {
+            text-align: left;
+            font-size: 16px;
         }
+
+        /* Checklist Styling */
+        .task-checkbox {
+            margin-right: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -152,23 +130,12 @@
 
         <!-- Tabs -->
         <div class="tabs">
-            <div class="tab active" data-tab="music"><img src="https://cdn-icons-png.flaticon.com/512/726/726623.png"> Music</div>
-            <div class="tab" data-tab="calendar"><img src="https://cdn-icons-png.flaticon.com/512/747/747310.png"> Calendar</div>
-            <div class="tab" data-tab="notes"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"> Notes</div>
-        </div>
-
-        <!-- Music Section -->
-        <div class="content active" id="music">
-            <h2>🎵 Your Playlists</h2>
-            <div class="music-container">
-                <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
-                <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
-                <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
-            </div>
+            <div class="tab active" data-tab="calendar"><img src="https://cdn-icons-png.flaticon.com/512/747/747310.png"> Calendar</div>
+            <div class="tab" data-tab="notes"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"> Notes</div>
         </div>
 
         <!-- Calendar Section -->
-        <div class="content" id="calendar">
+        <div class="content active" id="calendar">
             <h2>📅 February 2025</h2>
             <div class="calendar-header">
                 <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
@@ -202,18 +169,37 @@
             });
         });
 
+        const weeklyTasks = {
+            "Monday": ["4:45 AM - Gym", "6:15 AM - Shower", "8:00 AM - 4:30 PM - Work", "7:00 PM - 9:00 PM - Writing Assignments"],
+            "Tuesday": ["8:00 AM - 4:30 PM - Work", "7:00 PM - 8:00 PM - Book Writing", "8:00 PM - 9:00 PM - Celestial Hub Updates"],
+            "Wednesday": ["4:45 AM - Gym", "6:15 AM - Shower", "8:00 AM - 4:30 PM - Work", "7:00 PM - 10:00 PM - Wine Down Wednesday"],
+            "Thursday": ["8:00 AM - 4:30 PM - Work", "7:00 PM - 9:00 PM - Productivity Focus"],
+            "Friday": ["4:45 AM - Gym", "6:15 AM - Shower", "8:00 AM - 4:30 PM - Work", "7:00 PM - 10:00 PM - Unwind & Relax"],
+            "Saturday": ["Late Morning - Gym", "12:00 PM - Lunch & Cleaning", "5:00 PM - 8:00 PM - Schoolwork", "8:00 PM - Free Time"],
+            "Sunday": ["Morning - Yoga", "12:00 PM - Light Housework", "2:00 PM - Meal Prep", "4:00 PM - Schoolwork", "6:00 PM - Content Creation"]
+        };
+
         function createCalendar() {
             const calendarGrid = document.querySelector(".calendar-grid");
             for (let day = 1; day <= 28; day++) {
+                const date = new Date(2025, 1, day);
+                const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+
                 const dayElement = document.createElement("div");
                 dayElement.classList.add("calendar-day");
                 dayElement.innerText = day;
                 dayElement.onclick = function() {
-                    document.getElementById("task-list").innerHTML = `<li>Task for February ${day}</li>`;
-                    document.getElementById("task-display").style.display = "block";
+                    showTasks(dayName);
                 };
                 calendarGrid.appendChild(dayElement);
             }
+        }
+
+        function showTasks(day) {
+            const taskDisplay = document.getElementById("task-display");
+            const taskList = document.getElementById("task-list");
+            taskList.innerHTML = weeklyTasks[day].map(task => `<li><input type="checkbox" class="task-checkbox"> ${task}</li>`).join("");
+            taskDisplay.style.display = "block";
         }
 
         document.addEventListener("DOMContentLoaded", createCalendar);
