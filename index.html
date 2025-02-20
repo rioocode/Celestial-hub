@@ -315,7 +315,7 @@
                 <div class="music-container">
                     <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM"></iframe>
                     <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE"></iframe>
-                    <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/chill-vibes/pl.u-oZyl5yWIPYr0rE"></iframe>
+                    <iframe allow="autoplay *; encrypted-media *;" frameborder="0" src="https://embed.music.apple.com/us/playlist/high-vibrations-music/pl.u-WabZ1b7HW61v13"></iframe>
                 </div>
             </div>
         </div>
@@ -324,8 +324,8 @@
     <script type="text/babel">
         // Notes Component
         const NotesApp = () => {
-            const [activeTab, setActiveTab] = useState('gratitude');
-            const [notes, setNotes] = useState({
+            const [activeTab, setActiveTab] = React.useState('gratitude');
+            const [notes, setNotes] = React.useState({
                 gratitude: [
                     'Grateful for this beautiful day',
                     'Thankful for my supportive friends',
@@ -342,7 +342,7 @@
                     'I attract positivity and success'
                 ]
             });
-            const [newNote, setNewNote] = useState('');
+            const [newNote, setNewNote] = React.useState('');
 
             const addNote = (e) => {
                 e.preventDefault();
@@ -425,7 +425,7 @@
             );
         };
 
-        // Main JavaScript
+        // Calendar functionality
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize React Notes Component
-            ReactDOM.render(<NotesApp />, document.getElementById('
+            ReactDOM.render(<NotesApp />,
