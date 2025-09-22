@@ -4,64 +4,87 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Celestial Hub ✨</title>
+  <meta name="color-scheme" content="light">
   <style>
-    :root {
-      --bg:#0b0a12; --card:#141226; --ink:#f7f2ff; --sub:#b9a9d6;
-      --accent:#f0c6ff; --accent2:#a78bfa; --line:#2a2543;
+    :root{
+      /* Lavender light theme */
+      --bg:#F5F1FF;          /* page */
+      --card:#FFFFFF;        /* surfaces */
+      --ink:#2b2445;         /* primary text */
+      --sub:#6d5fa6;         /* secondary text */
+      --line:#E6E0FF;        /* borders */
+      --lav:#EBDDFF;         /* soft lavender */
+      --accent:#C7B4FF;      /* accent ring */
+      --accent-ink:#4726a6;  /* accent ink */
     }
     *{box-sizing:border-box}
+    html,body{margin:0; height:100%}
     body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      color:var(--ink); background:
-        radial-gradient(1200px 600px at 20% -10%, #1b1633 0%, transparent 60%),
-        radial-gradient(1200px 600px at 120% 10%, #1a1430 0%, transparent 60%),
-        linear-gradient(#0a0914, #0b0a12);
-      min-height:100svh; padding:24px;
+      font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, system-ui;
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 600px at -10% -10%, #efe7ff, transparent 60%),
+        radial-gradient(1200px 600px at 110% 10%, #efe7ff, transparent 60%),
+        linear-gradient(var(--bg), var(--bg));
+      min-height:100%;
+      padding:20px;
     }
     .shell{max-width:980px;margin:0 auto}
-    .title{font-weight:800; letter-spacing:.5px; font-size:28px; margin:0 0 6px}
-    .subtitle{margin:0 0 20px; color:var(--sub)}
-    .tabs{
-      display:flex; gap:8px; background:rgba(255,255,255,.02);
-      border:1px solid var(--line); padding:6px; border-radius:14px; backdrop-filter: blur(6px);
-    }
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .title{font-weight:800;font-size:28px;letter-spacing:.2px;margin:0}
+    .subtitle{margin:0;color:var(--sub)}
+    .tabs{display:flex;gap:8px;background:var(--lav);border:1px solid var(--line);padding:6px;border-radius:14px}
     .tab-btn{
-      appearance:none; border:1px solid var(--line); background:var(--card);
-      color:var(--ink); padding:10px 14px; border-radius:10px; cursor:pointer;
-      font-weight:600; letter-spacing:.2px;
+      appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+      padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700;letter-spacing:.2px;
     }
     .tab-btn[aria-selected="true"]{
-      border-color:var(--accent2); outline:2px solid rgba(167,139,250,.25);
-      box-shadow:0 0 0 3px rgba(167,139,250,.1) inset; 
+      border-color:var(--accent); outline:2px solid rgba(199,180,255,.35);
+      box-shadow:0 0 0 3px rgba(199,180,255,.20) inset;
     }
     .card{
-      margin-top:14px; background:var(--card); border:1px solid var(--line);
-      border-radius:16px; padding:16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
+      margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;
+      box-shadow:0 6px 24px rgba(86,64,160,.10);
     }
-    .row{display:flex; gap:10px; flex-wrap:wrap}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .subtabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px}
+    .sub-btn{
+      appearance:none;border:1px solid var(--line);background:var(--lav);color:var(--accent-ink);
+      padding:8px 10px;border-radius:999px;cursor:pointer;font-weight:700
+    }
+    .sub-btn[data-active="true"]{background:var(--accent); color:#2a166a; border-color:var(--accent)}
+    .embed-wrap{
+      width:100%; border:1px solid var(--line); border-radius:14px; overflow:hidden;
+      background:linear-gradient(#faf7ff, #fff);
+    }
+    iframe{display:block;border:0;width:100%}
     input[type="text"], textarea{
-      width:100%; background:#0f0d1d; color:var(--ink); border:1px solid var(--line);
-      border-radius:10px; padding:10px 12px; outline:none;
+      width:100%;background:#faf7ff;color:var(--ink);border:1px solid var(--line);
+      border-radius:10px;padding:10px 12px;outline:none;
     }
-    textarea{min-height:160px; resize:vertical}
-    .pill{font-size:12px; color:var(--sub); padding:2px 8px; border:1px solid var(--line); border-radius:999px}
-    .list{display:grid; gap:8px; margin-top:8px}
-    .item{display:flex; justify-content:space-between; align-items:center; gap:10px;
-      padding:10px; border:1px dashed var(--line); border-radius:10px; background:#0f0d1d}
-    .ghost{opacity:.7}
-    button.small{padding:6px 10px; border-radius:8px; background:#1a1630; border:1px solid var(--line); color:var(--ink); cursor:pointer}
-    .spark{position:fixed; inset:0; pointer-events:none; background-image:radial-gradient(2px 2px at 20% 30%, rgba(240,198,255,.6), transparent 60%),
-      radial-gradient(2px 2px at 60% 10%, rgba(167,139,250,.5), transparent 60%),
-      radial-gradient(1px 1px at 80% 80%, rgba(255,255,255,.35), transparent 60%);}
+    textarea{min-height:160px;resize:vertical}
+    .pill{font-size:12px;color:var(--sub);padding:2px 8px;border:1px solid var(--line);border-radius:999px}
+    .list{display:grid;gap:8px;margin-top:8px}
+    .item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px;border:1px dashed var(--line);border-radius:10px;background:#faf7ff}
+    button.small{padding:6px 10px;border-radius:8px;background:var(--lav);border:1px solid var(--line);color:var(--accent-ink);cursor:pointer;font-weight:700}
+    .ghost{opacity:.75}
+    @media (max-width:560px){
+      .title{font-size:24px}
+      .tabs{gap:6px;padding:6px}
+      .tab-btn{flex:1;text-align:center;padding:10px 8px}
+      .subtabs{gap:6px}
+      .sub-btn{flex:1;text-align:center}
+    }
   </style>
 </head>
 <body>
-  <div class="spark" aria-hidden="true"></div>
   <main class="shell">
-    <h1 class="title">Celestial Hub ✨</h1>
-    <p class="subtitle">v2 · Totally Spies energy · Music · Notes · Hype (Affirmations)</p>
+    <header>
+      <h1 class="title">Celestial Hub ✨</h1>
+      <p class="subtitle">Music · Notes · Hype</p>
+    </header>
 
+    <!-- Top-level tabs -->
     <nav class="tabs" role="tablist" aria-label="Celestial Tabs">
       <button class="tab-btn" role="tab" aria-selected="true" aria-controls="music" id="tab-music">Music</button>
       <button class="tab-btn" role="tab" aria-selected="false" aria-controls="notes" id="tab-notes">Notes</button>
@@ -70,40 +93,67 @@
 
     <!-- MUSIC -->
     <section class="card" id="music" role="tabpanel" aria-labelledby="tab-music">
-      <div class="row" style="align-items:center; justify-content:space-between">
+      <div class="row" style="justify-content:space-between">
         <h2 style="margin:0">🎵 Music</h2>
-        <span class="pill">Player + Playlist (URLs)</span>
-      </div>
-      <audio id="player" controls style="width:100%; margin-top:10px"></audio>
-
-      <div class="row" style="margin-top:10px">
-        <input id="trackTitle" type="text" placeholder="Track title" />
-        <input id="trackUrl"   type="text" placeholder="Direct MP3/stream URL (you must own rights)" />
-        <button class="small" id="addTrack">Add</button>
+        <span class="pill">Apple Music embeds · Sign in to play</span>
       </div>
 
-      <div class="list" id="playlist"></div>
-      <div class="row" style="margin-top:8px">
-        <button class="small" id="prevBtn">⏮️ Prev</button>
-        <button class="small" id="nextBtn">⏭️ Next</button>
-        <button class="small" id="shuffleBtn">🔀 Shuffle</button>
-        <span class="pill" id="nowPlaying" aria-live="polite">Now Playing: —</span>
+      <!-- Sub-tabs for each playlist -->
+      <div class="subtabs" role="tablist" aria-label="Playlist Tabs">
+        <button class="sub-btn" data-pl="afrowave" data-active="true">Afrowave</button>
+        <button class="sub-btn" data-pl="rap-girlies">Rap Girlies</button>
+        <button class="sub-btn" data-pl="rnb-pop">R&B · Pop</button>
       </div>
+
+      <!-- Embeds -->
+      <div class="embed-wrap" data-pane="afrowave">
+        <!-- Afrowave -->
+        <iframe
+          allow="autoplay *; encrypted-media *;"
+          height="450"
+          sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+          src="https://embed.music.apple.com/us/playlist/afrowave/pl.u-oZyl5yWIPYr0rE">
+        </iframe>
+      </div>
+
+      <div class="embed-wrap" data-pane="rap-girlies" hidden>
+        <!-- Rap Girlies -->
+        <iframe
+          allow="autoplay *; encrypted-media *;"
+          height="450"
+          sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+          src="https://embed.music.apple.com/us/playlist/rap-girlies/pl.u-NpXmbe7IvRGpGM">
+        </iframe>
+      </div>
+
+      <div class="embed-wrap" data-pane="rnb-pop" hidden>
+        <!-- R&B · Pop -->
+        <iframe
+          allow="autoplay *; encrypted-media *;"
+          height="450"
+          sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+          src="https://embed.music.apple.com/us/playlist/r-b-pop/pl.u-8aAVMAViNxyayR">
+        </iframe>
+      </div>
+
+      <p class="ghost" style="margin-top:10px">
+        Tip: if you’re not hearing audio, click the player and sign in to Apple Music in the embed.
+      </p>
     </section>
 
     <!-- NOTES -->
     <section class="card" id="notes" role="tabpanel" aria-labelledby="tab-notes" hidden>
-      <h2 style="margin-top:0">📝 Cosmic Notes</h2>
-      <textarea id="notesBox" placeholder="Brain dump, plans, ideas… saved automatically"></textarea>
+      <h2 style="margin:0 0 8px">📝 Notes</h2>
+      <textarea id="notesBox" placeholder="Drop thoughts, plans, to-dos… autosaves to this device."></textarea>
       <div class="row" style="margin-top:8px">
         <button class="small" id="clearNotes">Clear</button>
-        <span class="pill ghost">Saved to this device</span>
+        <span class="pill ghost">Saved locally</span>
       </div>
     </section>
 
     <!-- HYPE -->
     <section class="card" id="hype" role="tabpanel" aria-labelledby="tab-hype" hidden>
-      <div class="row" style="align-items:center; justify-content:space-between">
+      <div class="row" style="justify-content:space-between">
         <h2 style="margin:0">💖 Hype (Affirmations)</h2>
         <span class="pill">Saved locally</span>
       </div>
@@ -115,14 +165,12 @@
       </div>
 
       <div class="list" id="affList"></div>
-      <div style="margin-top:8px">
-        <div class="pill" id="affNow">—</div>
-      </div>
+      <div style="margin-top:8px"><div class="pill" id="affNow">—</div></div>
     </section>
   </main>
 
   <script>
-    // ---------- Tabs ----------
+    /* -------- Top tabs -------- */
     const tabs = [...document.querySelectorAll('.tab-btn')];
     const panels = {
       music: document.getElementById('music'),
@@ -137,18 +185,29 @@
       });
     });
 
-    // ---------- Notes (localStorage) ----------
-    const NOTES_KEY = 'celestial_notes_v1';
-    const notesBox = document.getElementById('notesBox');
-    const clearNotes = document.getElementById('clearNotes');
-    notesBox.value = localStorage.getItem(NOTES_KEY) || '';
-    notesBox.addEventListener('input', ()=> localStorage.setItem(NOTES_KEY, notesBox.value));
-    clearNotes.addEventListener('click', ()=>{
-      notesBox.value=''; localStorage.removeItem(NOTES_KEY);
+    /* -------- Playlist subtabs (Apple Music embeds) -------- */
+    const subBtns = [...document.querySelectorAll('.sub-btn')];
+    const panes = [...document.querySelectorAll('[data-pane]')];
+    function showPane(key){
+      panes.forEach(p=>p.hidden = p.dataset.pane !== key);
+      subBtns.forEach(b=>b.dataset.active = (b.dataset.pl === key) ? "true" : "false");
+    }
+    subBtns.forEach(b=>{
+      b.addEventListener('click', ()=> showPane(b.dataset.pl));
     });
 
-    // ---------- Hype (Affirmations) ----------
-    const AFF_KEY = 'celestial_affirmations_v1';
+    /* -------- Notes (localStorage) -------- */
+    const NOTES_KEY = 'celestial_notes_v2';
+    const notesBox = document.getElementById('notesBox');
+    const clearNotes = document.getElementById('clearNotes');
+    if (notesBox){
+      notesBox.value = localStorage.getItem(NOTES_KEY) || '';
+      notesBox.addEventListener('input', ()=> localStorage.setItem(NOTES_KEY, notesBox.value));
+      clearNotes?.addEventListener('click', ()=>{ notesBox.value=''; localStorage.removeItem(NOTES_KEY); });
+    }
+
+    /* -------- Hype (Affirmations) -------- */
+    const AFF_KEY = 'celestial_affirmations_v2';
     const defaultAff = [
       "I am the main character.",
       "My standards create my reality.",
@@ -164,6 +223,7 @@
     const affNow = document.getElementById('affNow');
 
     function renderAff(){
+      if(!affList) return;
       affList.innerHTML='';
       affs.forEach((t, i)=>{
         const row=document.createElement('div'); row.className='item';
@@ -179,7 +239,7 @@
     }
     renderAff();
 
-    affList.addEventListener('click', e=>{
+    affList?.addEventListener('click', e=>{
       const btn=e.target.closest('button'); if(!btn) return;
       const i=+btn.dataset.i; const act=btn.dataset.act;
       if(act==='del'){ affs.splice(i,1); }
@@ -187,7 +247,7 @@
       if(act==='down' && i<affs.length-1){ [affs[i+1], affs[i]]=[affs[i], affs[i+1]]; }
       renderAff();
     });
-    addAff.addEventListener('click', ()=>{
+    addAff?.addEventListener('click', ()=>{
       const v=affInput.value.trim(); if(!v) return;
       affs.push(v); affInput.value=''; renderAff();
     });
@@ -195,67 +255,8 @@
       if(!affs.length) return '—';
       return affs[Math.floor(Math.random()*affs.length)];
     }
-    shuffleAff.addEventListener('click', ()=>{ affNow.textContent = pickAff(); });
-    affNow.textContent = pickAff();
-
-    // ---------- Music (simple URL playlist) ----------
-    const MUSIC_KEY = 'celestial_music_v1';
-    let playlist = JSON.parse(localStorage.getItem(MUSIC_KEY) || '[]');
-    let current = 0;
-
-    const player = document.getElementById('player');
-    const playlistEl = document.getElementById('playlist');
-    const addTrackBtn = document.getElementById('addTrack');
-    const titleIn = document.getElementById('trackTitle');
-    const urlIn = document.getElementById('trackUrl');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const shuffleBtn = document.getElementById('shuffleBtn');
-    const nowPlaying = document.getElementById('nowPlaying');
-
-    function savePlaylist(){ localStorage.setItem(MUSIC_KEY, JSON.stringify(playlist)); }
-    function renderPlaylist(){
-      playlistEl.innerHTML='';
-      playlist.forEach((t,i)=>{
-        const row=document.createElement('div'); row.className='item';
-        row.innerHTML=`<div style="flex:1"><strong>${t.title||'Untitled'}</strong><br><span class="pill ghost">${t.url}</span></div>
-                       <div class="row">
-                         <button class="small" data-i="${i}" data-act="play">Play</button>
-                         <button class="small" data-i="${i}" data-act="del">Remove</button>
-                       </div>`;
-        playlistEl.appendChild(row);
-      });
-      savePlaylist();
-    }
-    function load(i){
-      if(!playlist.length) { player.removeAttribute('src'); nowPlaying.textContent='Now Playing: —'; return; }
-      current = (i+playlist.length)%playlist.length;
-      const t = playlist[current];
-      player.src = t.url; player.play().catch(()=>{});
-      nowPlaying.textContent = 'Now Playing: ' + (t.title || t.url);
-    }
-    playlistEl.addEventListener('click', e=>{
-      const btn=e.target.closest('button'); if(!btn) return;
-      const i=+btn.dataset.i; const act=btn.dataset.act;
-      if(act==='play'){ load(i); }
-      if(act==='del'){ playlist.splice(i,1); renderPlaylist(); if(i===current) load(0); }
-    });
-    addTrackBtn.addEventListener('click', ()=>{
-      const title = titleIn.value.trim();
-      const url = urlIn.value.trim();
-      if(!url) return;
-      playlist.push({title, url});
-      titleIn.value=''; urlIn.value='';
-      renderPlaylist(); if(playlist.length===1) load(0);
-    });
-    prevBtn.addEventListener('click', ()=> load(current-1));
-    nextBtn.addEventListener('click', ()=> load(current+1));
-    shuffleBtn.addEventListener('click', ()=>{
-      if(!playlist.length) return;
-      load(Math.floor(Math.random()*playlist.length));
-    });
-
-    renderPlaylist(); if(playlist.length) load(0);
+    shuffleAff?.addEventListener('click', ()=>{ affNow.textContent = pickAff(); });
+    if(affNow) affNow.textContent = pickAff();
   </script>
 </body>
 </html>
